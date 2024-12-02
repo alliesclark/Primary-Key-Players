@@ -17,7 +17,7 @@ should not totally die.
 """
 data = {} 
 try:
-  data = requests.get('http://api:4000/s/students').json()
+  data = requests.get('http://api:4000/s/recruiters').json()
   st.write("Data retrieved from the API")
 except:
   st.write("**Important**: Could not connect to sample api, so using dummy data.")
