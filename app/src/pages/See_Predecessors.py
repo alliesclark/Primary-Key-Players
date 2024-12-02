@@ -20,7 +20,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 # Fetch job data
 jobs = []
 try:
-    jobs = requests.get('http://api:4000/j/job_position').json()
+    jobs = requests.get('http://api:4000/j/job-position').json()
 except Exception as e:
     logger.error(f"Error retrieving job data: {e}")
     st.write("Failed to load job data. Using fallback options.")
