@@ -264,42 +264,44 @@ def add_job_position():
     response.status_code = 200
     return response
 
-# # ------------------------------------------------------------
-# # get product information about a specific product
-# # notice that the route takes <id> and then you see id
-# # as a parameter to the function.  This is one way to send 
-# # parameterized information into the route handler.
-# @students.route('/product/<id>', methods=['GET'])
-# def get_product_detail (id):
+#------------------------------------------------------------
+# Update a job position in the database
+@job_position.route('/job-position', methods=['PUT'])
+def update_job_position():
+    # Collecting data from the request object
+    job_position_data = request.json
+    current_app.logger.info(job_position_data)
 
-#     query = f'''SELECT id, 
-#                        product_name, 
-#                        description, 
-#                        list_price, 
-#                        category 
-#                 FROM products 
-#                 WHERE id = {str(id)}
-#     '''
-    
-#     # logging the query for debugging purposes.  
-#     # The output will appear in the Docker logs output
-#     # This line has nothing to do with actually executing the query...
-#     # It is only for debugging purposes. 
-#     current_app.logger.info(f'GET /product/<id> query={query}')
+    # Extracting the variables
+    id = job_position_data['id']
+    title = job_position_data['title']
+    description = job_position_data['description']
+    still_accepting = job_position_data['still_accepting']
+    num_applicants = job_position_data['num_applicants']
+    postedAt = job_position_data['postedAt']
+    updatedAt = job_position_data['updatedAt']
+    desired_skills = job_position_data['desired_skills']
+    targeted_majors = job_position_data['targeted_majors']
+    company_id = job_position_data['company_id']
 
-#     # get the database connection, execute the query, and 
-#     # fetch the results as a Python Dictionary
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query)
-#     theData = cursor.fetchall()
-    
-#     # Another example of logging for debugging purposes.
-#     # You can see if the data you're getting back is what you expect. 
-#     current_app.logger.info(f'GET /product/<id> Result of query = {theData}')
-    
-#     response = make_response(jsonify(theData))
-#     response.status_code = 200
-#     return response
+    # Constructing the query
+    query = f'''
+        UPDATE job_position
+        SET title = '{title}', description = '{description}', still_accepting = '{still_accepting}', 
+                    num_applicants = '{num_applicants}', postedAt = '{postedAt}', updatedAt = '{updatedAt}',
+                    desired_skills = '{desired_skills}', targeted_majors = '{targeted_majors}', company_id = '{company_id}'
+        WHERE id = {id}
+    '''
+    current_app.logger.info(query)
+
+    # Executing and committing the update statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    response = make_response("Successfully updated job position")
+    response.status_code = 200
+    return response
     
 # # ------------------------------------------------------------
 # # Get the top 5 most expensive products from the database
