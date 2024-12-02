@@ -43,7 +43,7 @@ with ui.element("div", className="bg-transparent p-3 flex justify-center items-c
     ui.element("span", children=["Brought to you by the Primary Key Players"], className="text-sm font-bold text-grey-300", key="masthead")
 
     
-if ui.button(text="proceed", key="continue_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+if ui.button(text="Proceed", key="continue_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/User_Selection_Page.py')
 
 
