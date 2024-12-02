@@ -21,10 +21,10 @@ with ui.element("div", className="flex flex-row justify-center items-center", ke
             st.switch_page('pages/View_Jobs.py')
     with ui.element("div", className="flex flex-col m-2", key="winston_button_2"):
         if ui.button(text="View Job Positions", key="2", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/See_Predecessors.py')
+            st.switch_page('pages/View_Jobs.py')
     with ui.element("div", className="flex flex-col m-2", key="winston_button_3"):
         if ui.button(text="View Reviews", key="3", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/Research_Interview_Questions.py')
+            st.switch_page('pages/See_Reviews.py')
     with ui.element("div", className="flex flex-col m-2", key="winston_button_4"):
         if ui.button(text="Manage Student Profiles", key="4", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/See_Reviews.py')
