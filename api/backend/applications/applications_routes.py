@@ -92,6 +92,36 @@ def create_application():
 
 
 #------------------------------------------------------------
+# Update a job application
+@job_applications.route('/applications/<application_id>', methods=['PUT'])
+def update_job_application(application_id):
+    # Collecting data from the request object
+    data = request.json
+    current_app.logger.info(data)
+
+    # Extracting the variables
+    applicant_id = data['applicant_id']
+    job_position_id = data['job_position_id']
+    status = data['status']
+
+    # Constructing the query
+    query = f'''
+        UPDATE job_position
+        SET applicant_id = '{applicant_id}', job_position_id = '{job_position_id}', status = '{staus}'
+        WHERE id = {application_id}
+    '''
+    current_app.logger.info(query)
+
+    # Executing and committing the update statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    response = make_response("Successfully updated job application")
+    response.status_code = 200
+    return response
+
+#------------------------------------------------------------
 # Delete an application
 @job_applications.route('/applications/<application_id>', methods=['DELETE'])
 def delete_application(application_id):
