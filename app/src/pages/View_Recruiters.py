@@ -27,5 +27,5 @@ def RecruiterCard(recruiter):
         ui.element("p", children=[f"Email: {recruiter['email']}"], className="text-gray-600", key=f"job_location_{recruiter['id']}")
 
 if data and isinstance(data, list):
-    for data in list:
-            RecruiterCard(data)
+    for recruiter in data:
+            RecruiterCard(recruiter)
