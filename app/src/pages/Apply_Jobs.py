@@ -9,9 +9,9 @@ from modules.nav import SideBarLinks
 SideBarLinks(show_home=True)
 
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_jobs_card"):
-    ui.element("h2", children=["View Jobs"], className="text-2xl font-bold text-gray-800", key="view_jobs_title")
+    ui.element("h2", children=["Apply to Co-ops"], className="text-2xl font-bold text-gray-800", key="view_jobs_title")
     ui.element("div", children=["\n\n"], key="view_jobs_divider")
-    ui.element("p", children=["Here you can view all the jobs posted on our platform. You can see the job title, description, location, desired skills, targeted majors, number of applicants, whether the job is still accepting applications, and the date the job was posted and updated."], className="text-gray-600")
+    ui.element("p", children=["It is now time to finally apply to available job positions. You can easily submit an application by simply clicking the `Apply` button above the position."], className="text-gray-600")
 
 # Get all students
 students = {}
