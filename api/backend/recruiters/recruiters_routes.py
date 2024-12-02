@@ -23,11 +23,11 @@ recruiters = Blueprint('recruiters', __name__)
 @recruiters.route('/recruiters', methods=['GET'])
 def get_recruiters():
     query = '''
-        SELECT  id,
-                name,
-                position,
-                email,
-                company_id
+        SELECT  h.id,
+                h.name,
+                h.position,
+                h.email,
+                h.company_id,
                 c.name as company_name 
         FROM hiring_manager h
         JOIN company c ON h.company_id = c.id
@@ -97,7 +97,7 @@ def get_recruiters_contact (id):
 
     query = f'''SELECT id,
                        name, 
-                       email, 
+                       email
                 FROM hiring_manager
                 WHERE id = {str(id)}
     '''
