@@ -63,13 +63,13 @@ with ui.element("div", className="bg-transparent p-10 flex justify-center items-
         st.session_state['authenticated'] = True
         st.session_state['role'] = 'senior'
         st.session_state['first_name'] = 'Wade'
-        st.switch_page('pages/10_USAID_Worker_Home.py')
+        st.switch_page('pages/Wade_Home_Page.py')
 
     if ui.button(text="Act as Damian Wayne - recruiter at Microsoft looking to hire CS undergraduates", key="damian_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
         st.session_state['authenticated'] = True
         st.session_state['role'] = 'recruiter'
         st.session_state['first_name'] = 'Damian'
-        st.switch_page('pages/Wade_Home_Page.py')
+        st.switch_page('pages/20_Admin_Home.py')
 
     if ui.button(text="Act as Winston Churchill - Co-op advisor seeking to improve the whole process for students", key="winston_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
         st.session_state['authenticated'] = True
