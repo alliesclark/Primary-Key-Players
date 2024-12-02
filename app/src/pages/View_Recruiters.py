@@ -14,7 +14,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 data = {} 
 try:
-    data = requests.get('http://api:4000/j/hiring-manager').json()
+    data = requests.get('http://api:4000/j/recruiters').json()
     ui.element("h3", children=["Recruiters"], className="text-xl font-bold text-gray-800")  
 except:
     logger.error("Error retrieving data from the API")
