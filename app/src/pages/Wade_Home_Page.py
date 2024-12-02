@@ -14,3 +14,20 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("h2", children=["Welcome Wade!"], className="text-2xl font-bold text-gray-800", key="maura_welcome")
     ui.element("div", children=["\n\n"], key="maura_divider")
     ui.element("p", children=["As a student with previous co-op experience, this page will be your hub for key resources most useful to you."], className="text-gray-600")
+
+with ui.element("div", className="flex flex-row justify-center items-center", key="wade_buttons"):
+    with ui.element("div", className="flex flex-col m-2", key="wade_button_1"):
+        if ui.button(text="Post Reviews", key="1", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/See_Reviews.py')
+    with ui.element("div", className="flex flex-col m-2", key="wade_button_2"):
+        if ui.button(text="Post Interview Questions", key="2", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/Research_Interview_Questions.py')
+    with ui.element("div", className="flex flex-col m-2", key="wade_button_3"):
+        if ui.button(text="View Reviews", key="3", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/See_Reviews.py')
+    with ui.element("div", className="flex flex-col m-2", key="wade_button_4"):
+        if ui.button(text="View Job Positions", key="4", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/View_Jobs.py')
+    with ui.element("div", className="flex flex-col m-2", key="wade_button_5"):
+        if ui.button(text="Questions From Peers", key="5", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/View_Jobs.py')
