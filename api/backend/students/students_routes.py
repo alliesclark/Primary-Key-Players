@@ -24,12 +24,12 @@ students = Blueprint('students', __name__)
 @students.route('/students', methods=['GET'])
 def get_students():
     query = '''
-        SELECT  id, 
-                name, 
-                email, 
-                gpa, 
+        SELECT  s.id, 
+                s.name, 
+                s.email, 
+                s.gpa, 
                 m.name AS major_name,
-                grad_year,
+                s.grad_year,
                 c.name AS advisor_name 
         FROM student s JOIN major m ON s.major_id = m.id JOIN coop_advisor c ON c.id = s.advised_by
     '''
