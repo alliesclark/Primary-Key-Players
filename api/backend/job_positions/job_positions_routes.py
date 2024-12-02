@@ -101,12 +101,12 @@ def get_specific_job (id):
 
 
 # ------------------------------------------------------------
-# Get student information about a specific student
-# notice that the route takes <major> and then you see major
+# Get job position information about jobs targeting specific majors
+# notice that the route accesses targeted_maors and then you see major
 # as a parameter to the function.  This is one way to send
 # parameterized information into the route handler.
-@job_position.route('/job_position/targeted_majors', methods=['GET'])
-def get_jobs_by_major (major):
+@job_position.route('/job-position/targeted-majors/<major_id>', methods=['GET'])
+def get_jobs_by_major (major_id):
 
     query = f'''SELECT id, 
                        title, 
@@ -119,14 +119,14 @@ def get_jobs_by_major (major):
                        targeted_majors,
                        company_id 
                 FROM job_position 
-                WHERE targeted_majors = {str(major)}
+                WHERE targeted_majors = {str(major_id)}
     '''
     
     # logging the query for debugging purposes.
     # The output will appear in the Docker logs output
     # This line has nothing to do with actually executing the query...
     # It is only for debugging purposes.
-    current_app.logger.info(f'GET /job_position/targeted_majors query={query}')
+    current_app.logger.info(f'GET /job-position/targeted-majors/<major_id> query={query}')
 
     # get the database connection, execute the query, and
     # fetch the results as a Python Dictionary
@@ -136,7 +136,7 @@ def get_jobs_by_major (major):
     
     # Another example of logging for debugging purposes.
     # You can see if the data you're getting back is what you expect.
-    current_app.logger.info(f'GET /job_position/targeted_majors Result of query = {theData}')
+    current_app.logger.info(f'GET /job-position/targeted-majors/<major_id> Result of query = {theData}')
     
     response = make_response(jsonify(theData))
     response.status_code = 200
