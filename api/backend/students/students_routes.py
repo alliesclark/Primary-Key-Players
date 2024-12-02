@@ -28,10 +28,10 @@ def get_students():
                 name, 
                 email, 
                 gpa, 
-                major_id,
+                m.name AS major_name,
                 grad_year,
-                advised_by 
-        FROM student
+                c.name AS advisor_name 
+        FROM student s JOIN major m ON s.major_id = m.id JOIN coop_advisor c ON c.id = s.advised_by
     '''
     
     # get a cursor object from the database
@@ -268,30 +268,18 @@ def update_student():
 
 #------------------------------------------------------------
 # Delete a student from the database
-@students.route('/students', methods=['DELETE'])
-def delete_student():
-    # Collecting data from the request object
-    student_data = request.json
-    current_app.logger.info(student_data)
-
-    # Extracting the variables
-    student_id = student_data['id']
-
-    # Constructing the query
-    query = f'''
-        DELETE FROM student
-        WHERE id = {student_id}
+@students.route('/students/<id>', methods=['DELETE'])
+def delete_student(student_id):
+    
+    query = f'''DELETE FROM student WHERE id = {student_id}
     '''
-    current_app.logger.info(query)
-
-    # Executing and committing the delete statement
+    
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-
-    response = make_response("Successfully deleted student")
+    
+    response = make_response(jsonify({'message': 'Student deleted'}))
     response.status_code = 200
     return response
-
 
 #------------------------------------------------------------
