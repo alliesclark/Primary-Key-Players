@@ -183,10 +183,10 @@ def delete_review():
 
 #------------------------------------------------------------
 # Retrieve a list of reviews for positions at a specific company
-@reviews.route('/reviews/company/<id>', methods=['GET'])
+@reviews.route('/reviews/company/<company_id>', methods=['GET'])
 def get_reviews_by_company(company_id):
 
-    query = '''
+    query = f'''
         SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id
         FROM review r
         JOIN job_position jp ON r.job_position_id = jp.id
@@ -194,7 +194,7 @@ def get_reviews_by_company(company_id):
         WHERE c.id = {str(company_id)}
     '''
     #Log query
-    current_app.logger.info(f'GET /reviews/company/<id> query={query}')
+    current_app.logger.info(f'GET /reviews/company/<company_id> query={query}')
 
     # Get a cursor object from the database
     cursor = db.get_db().cursor()

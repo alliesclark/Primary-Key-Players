@@ -4,6 +4,8 @@ from backend.db_connection import db
 from backend.students.students_routes import students
 from backend.job_positions.job_positions_routes import job_position
 from backend.interview_questions.interview_questions_routes import interview_questions
+from backend.companies.company_routes import company
+from backend.reviews.reviews_routes import reviews
 import os
 from dotenv import load_dotenv
 
@@ -42,6 +44,8 @@ def create_app():
     app.register_blueprint(students,   url_prefix='/s')
     app.register_blueprint(job_position, url_prefix='/j')
     app.register_blueprint(interview_questions, url_prefix='/i')
+    app.register_blueprint(company, url_prefix='/c')
+    app.register_blueprint(reviews, url_prefix='/r')
 
     # Don't forget to return the app object
     return app
