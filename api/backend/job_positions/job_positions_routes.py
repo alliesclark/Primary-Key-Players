@@ -217,7 +217,7 @@ def get_student_past_jobs(id):
 
     # Another example of logging for debugging purposes.
     # You can see if the data you're getting back is what you expect.
-    current_app.logger.info(f'GET /job-position/student/<id> Result of query = {theData}')
+    current_app.logger.info(f'GET /job-position/student/<id> Result of query = {students_data}')
 
     # Create an HTTP response with the data
     response = make_response(jsonify(students_data))

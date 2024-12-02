@@ -34,7 +34,7 @@ SideBarLinks(show_home=True)
 # ***************************************************
 with ui.element("div", className="bg-transparent p-3 flex justify-center items-center flex-col", key="parent-container"):
     with ui.element("div", className="bg-transparent p-3 flex justify-center flex-row", key="container"):
-        ui.element("img", src="assets/husky.png", key="logo")
+        # ui.element("img", src="assets/husky.png", key="logo")
         with ui.element("div", className="bg-transparent p-4", key="opening_screen"):
             ui.element("span", children=["Co-op"], className="text-4xl font-bold", key="title1")
             ui.element("div", children=["\n"], key="space1")

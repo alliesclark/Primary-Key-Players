@@ -31,8 +31,8 @@ def ResearchInterviewQuestions():
 def SeeReviews():
     st.sidebar.page_link("pages/See_Reviews.py", label="See Reviews", icon="📝")
 
-# def ApplicationStatuses():
-#     st.sidebar.page_link("pages/Application_Statuses.py", label="Application Statuses", icon="📊")
+def ApplicationStatuses():
+    st.sidebar.page_link("pages/Application_Statuses.py", label="Application Statuses", icon="📊")
 
 # def SubmitApplication():
 #     st.sidebar.page_link("pages/Submit_Application.py", label="Submit Application", icon="📤")
@@ -106,7 +106,7 @@ def SideBarLinks(show_home=False):
             SeePredecessors()
             ResearchInterviewQuestions()
             SeeReviews()
-            # ApplicationStatuses()
+            ApplicationStatuses()
             # SubmitApplication()
 
         # If the user role is usaid worker, show the Api Testing page
