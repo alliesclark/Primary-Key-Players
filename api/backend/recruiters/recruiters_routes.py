@@ -28,7 +28,9 @@ def get_recruiters():
                 position,
                 email,
                 company_id
-        FROM hiring_manager
+                c.name as company_name 
+        FROM hiring_manager h
+        JOIN company c ON h.company_id = c.id
     '''
     
     # get a cursor object from the database
