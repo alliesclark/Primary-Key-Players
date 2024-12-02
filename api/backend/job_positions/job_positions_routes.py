@@ -227,40 +227,42 @@ def get_student_past_jobs(id):
     return response
 
 
+#------------------------------------------------------------
+# Post a new job position to the database
+@job_position.route('/job-position', methods=['POST'])
+def add_job_position():
+    # Collecting data from the request object
+    job_position_data = request.json
+    current_app.logger.info(job_position_data)
 
+    # Extracting the variables
+    title = job_position_data['title']
+    description = job_position_data['description']
+    still_accepting = job_position_data['still_accepting']
+    num_applicants = job_position_data['num_applicants']
+    postedAt = job_position_data['postedAt']
+    updatedAt = job_position_data['updatedAt']
+    desired_skills = job_position_data['desired_skills']
+    targeted_majors = job_position_data['targeted_majors']
+    company_id = job_position_data['company_id']
 
-# #------------------------------------------------------------
-# # Get all the products from the database, package them up,
-# # and return them to the client
-# @students.route('/products', methods=['GET'])
-# def get_products():
-#     query = '''
-#         SELECT  id, 
-#                 product_code, 
-#                 product_name, 
-#                 list_price, 
-#                 category 
-#         FROM products
-#     '''
-    
-#     # get a cursor object from the database
-#     cursor = db.get_db().cursor()
+    # Constructing the query
+    query = f'''
+        INSERT INTO job_position (title, description, still_accepting, num_applicants, postedAt, updatedAt,
+                                    desired_skills, targeted_majors, company_id)
+        VALUES ('{title}', '{description}', {still_accepting}, {num_applicants}, {postedAt}, {updatedAt},
+                    '{desired_skills}', '{targeted_majors}', '{company_id}')
+    '''
+    current_app.logger.info(query)
 
-#     # use cursor to query the database for a list of products
-#     cursor.execute(query)
+    # Executing and committing the insert statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
 
-#     # fetch all the data from the cursor
-#     # The cursor will return the data as a 
-#     # Python Dictionary
-#     theData = cursor.fetchall()
-
-#     # Create a HTTP Response object and add results of the query to it
-#     # after "jasonify"-ing it.
-#     response = make_response(jsonify(theData))
-#     # set the proper HTTP Status code of 200 (meaning all good)
-#     response.status_code = 200
-#     # send the response back to the client
-#     return response
+    response = make_response("Successfully added student")
+    response.status_code = 200
+    return response
 
 # # ------------------------------------------------------------
 # # get product information about a specific product
