@@ -107,9 +107,9 @@ def StudentProfileCard(student):
 
 if data and isinstance(data, list):
     if data:
-        for application in data:
-            ApplicationCard(application)
+        for student in data:
+            StudentProfileCard(student)
     else:
-        ui.element("h3", children=["No applications sent out."], className="text-xl font-bold text-gray-800")
+        ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
 else:
-    ui.element("h3", children=["No applications sent out."], className="text-xl font-bold text-gray-800")
+    ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")

@@ -24,8 +24,13 @@ def RecruiterCard(recruiter):
     with ui.element("div", key=f"recruiter_card_{recruiter['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
         ui.element("h3", children=[f"{recruiter['name']} @ {recruiter['company_name']}"], className="text-xl font-bold text-gray-800", key=f"recruiter_name_{recruiter['id']}")
         ui.element("p", children=[f"Position: {recruiter['position']}"], className="text-gray-600", key=f"job_desc_{recruiter['id']}")
-        ui.element("p", children=[f"Email: {recruiter['email']}"], className="text-gray-600", key=f"job_location_{recruiter['id']}")
+        ui.element("p", children=[f"Email: {recruiter['email']}"], className="text-gray-600", key=f"job_location_{recruiter['id']}")       
 
 if data and isinstance(data, list):
-    for recruiter in data:
+    if data:
+        for recruiter in data:
             RecruiterCard(recruiter)
+    else:
+        ui.element("h3", children=["No recruiters found."], className="text-xl font-bold text-gray-800")
+else:
+    ui.element("h3", children=["No recruiters found."], className="text-xl font-bold text-gray-800")
