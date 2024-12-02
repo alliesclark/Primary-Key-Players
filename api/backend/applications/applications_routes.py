@@ -90,4 +90,20 @@ def create_application():
     response.status_code = 201
     return response
 
+
+#------------------------------------------------------------
+# Delete an application
+@job_applications.route('/applications/<application_id>', methods=['DELETE'])
+def delete_application(application_id):
+    
+    query = f'''DELETE FROM application WHERE id = {application_id}
+    '''
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    response = make_response(jsonify({'message': 'Application deleted'}))
+    response.status_code = 200
+    return response
       

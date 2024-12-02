@@ -19,6 +19,32 @@ try:
 except:
     logger.error("Error retrieving data from the API")
     data = []  
+    
+def deleteApplication(application):
+    try:
+        response = requests.delete(f'http://api:4000/a/applications/{application["id"]}')
+        if response.status_code == 200:
+            logger.info(f"Application deleted {application['id']}")    
+        else:
+            ui.element(
+                "p",
+                children=[
+                    f"Failed to delete application: {response.json().get('message', 'Unknown error')}"
+                ],
+                className="text-red-500",
+                key=f"delete_application_error_{application['id']}"
+            )
+    except:
+        logger.error("Error deleting application")
+        ui.element(
+            "p",
+            children=[
+                f"Failed to delete application: Unknown error"
+            ],
+            className="text-red-500",
+            key=f"delete_application_error_{application['id']}"
+        )
+    
 
 def ApplicationCard(application):
     with ui.element("div", key=f"application_card_{application['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
@@ -43,6 +69,13 @@ def ApplicationCard(application):
             className="text-gray-400 text-sm",
             key=f"application_applied_at_{application['id']}"
         )
+        
+        deleteBtn = ui.button("Delete", className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", key=f"delete_application_{application['id']}")
+        if deleteBtn:
+            deleteApplication(application)
+        ui.alert_dialog(show=deleteBtn, title="Deleted Application", description=f"Your application for the role of {application['job_title']} at {application['company_name']} has been deleted.", confirm_label="OK", cancel_label="Cancel", key=f"alert_dialog_{application['id']}")
+
+
 
 
 if data and isinstance(data, list):
