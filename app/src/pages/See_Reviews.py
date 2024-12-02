@@ -15,7 +15,7 @@ SideBarLinks(show_home=True)
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_jobs_card"):
     ui.element("h2", children=["Check out reviews"], className="text-2xl font-bold text-gray-800", key="view_jobs_title")
     ui.element("div", children=["\n\n"], key="view_reviews_divider")
-    ui.element("p", children=["Reach out to students who have worked the role you desire, email them and set up a coffee chat!"], className="text-gray-600")
+    ui.element("p", children=["Look at reviews for companies you desire"], className="text-gray-600")
 
 # Fetch companies
 companies = []
@@ -41,7 +41,6 @@ if desired_company_id:
 
 def ReviewCard(review):
     with ui.element("div", key=f"review_card_{review['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
-        # Render the review rating
         ui.element(
             "h3",
             children=[f"Rating: {review['rating']} / 5"],
@@ -49,13 +48,14 @@ def ReviewCard(review):
             key=f"review_rating_{review['id']}"
         )
         
-        # Render the review text
         ui.element(
             "p",
             children=[review['review']],
             className="text-gray-600",
             key=f"review_text_{review['id']}"
         )
+
+        ui.element("p", children=[f"Written by: {review['student_name']}"], className="text-gray-600", key=f"review_student_{review['id']}")
 
 
 # Display review cards or a fallback message
