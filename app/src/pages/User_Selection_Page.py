@@ -57,7 +57,7 @@ with ui.element("div", className="bg-transparent p-10 flex justify-center items-
         # finally, we ask streamlit to switch to another page, in this case, the 
         # landing page for this particular user type
         logger.info("Logging in as Political Strategy Advisor Persona")
-        st.switch_page('pages/View_Jobs.py')
+        st.switch_page('pages/Maura_Home_Page.py')
 
     if ui.button(text="Act as Wade Wilson - DS Senior looking to share his past co-op experiences and give advice", key="wade_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
         st.session_state['authenticated'] = True

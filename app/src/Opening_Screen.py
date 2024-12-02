@@ -36,15 +36,15 @@ with ui.element("div", className="bg-transparent p-3 flex justify-center items-c
     with ui.element("div", className="bg-transparent p-3 flex justify-center flex-row", key="container"):
         # ui.element("img", src="assets/husky.png", key="logo")
         with ui.element("div", className="bg-transparent p-4", key="opening_screen"):
-            ui.element("span", children=["Co-op"], className="text-4xl font-bold", key="title1")
+            ui.element("h1", children=["Co-op"], className="text-4xl font-bold", key="title1")
             ui.element("div", children=["\n"], key="space1")
-            ui.element("span", children=["Connect"], className="text-4xl text-red-500 font-bold", key="title2")
+            ui.element("h1", children=["Connect"], className="text-4xl text-red-500 font-bold", key="title2")
             ui.element("div", children=["\n"], key="space2")
-    
+    ui.element("span", children=["Brought to you by the Primary Key Players"], className="text-sm font-bold text-grey-300", key="masthead")
 
     
-
-
 if ui.button(text="proceed", key="continue_btn", className="bg-red-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/User_Selection_Page.py')
+
+
 

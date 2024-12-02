@@ -1,6 +1,5 @@
 import logging
 logger = logging.getLogger(__name__)
-import streamlit as st
 import streamlit_shadcn_ui as ui
 import requests
 
