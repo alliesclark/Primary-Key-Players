@@ -11,7 +11,7 @@ SideBarLinks(show_home=True)
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_jobs_card"):
     ui.element("h2", children=["View Your Applications"], className="text-2xl font-bold text-gray-800", key="view_apps_title")
     ui.element("div", children=["\n\n"], key="view_jobs_divider")
-    ui.element("p", children=["Look at all the co-ops you've applied to."], className="text-gray-600")
+    ui.element("p", children=["Look at all the co-ops you've applied to and delete the ones you wish to no longer be applying for."], className="text-gray-600")
 
 data = {} 
 try:
@@ -70,7 +70,7 @@ def ApplicationCard(application):
             key=f"application_applied_at_{application['id']}"
         )
         
-        deleteBtn = ui.button("Delete", className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", key=f"delete_application_{application['id']}")
+        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_application_{application['id']}")
         if deleteBtn:
             deleteApplication(application)
         ui.alert_dialog(show=deleteBtn, title="Deleted Application", description=f"Your application for the role of {application['job_title']} at {application['company_name']} has been deleted.", confirm_label="OK", cancel_label="Cancel", key=f"alert_dialog_{application['id']}")
