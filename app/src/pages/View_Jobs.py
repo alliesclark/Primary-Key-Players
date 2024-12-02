@@ -23,7 +23,7 @@ except:
 
 def JobCard(job):
     with ui.element("div", key=f"job_card_{job['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
-        ui.element("h3", children=[job["title"]], className="text-xl font-bold text-gray-800", key=f"job_title_{job['id']}")
+        ui.element("h3", children=[f"{job['title']} @ {job['company_name']}"], className="text-xl font-bold text-gray-800", key=f"job_title_{job['id']}")
         ui.element("p", children=[f"Description: {job['description']}"], className="text-gray-600", key=f"job_desc_{job['id']}")
         ui.element("p", children=[f"Location: {job['location']}"], className="text-gray-600", key=f"job_location_{job['id']}")
         ui.element("p", children=[f"Desired Skills: {job['desired_skills']}"], className="text-gray-600", key=f"job_skills_{job['id']}")
@@ -38,7 +38,7 @@ def JobCard(job):
         ui.element("p", children=[f"Posted At: {job['postedAt']}"], className="text-gray-400 text-sm", key=f"job_posted_{job['id']}")
         ui.element("p", children=[f"Updated At: {job['updatedAt']}"], className="text-gray-400 text-sm", key=f"job_updated_{job['id']}")
 
-# Render only jobs that are still accepting applications
+
 if data and isinstance(data, list):
     accepting_jobs = [job for job in data if job.get("still_accepting")]
     if accepting_jobs:

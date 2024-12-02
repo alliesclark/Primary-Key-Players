@@ -34,8 +34,8 @@ def SeeReviews():
 def ApplicationStatuses():
     st.sidebar.page_link("pages/Application_Statuses.py", label="Application Statuses", icon="📊")
 
-# def SubmitApplication():
-#     st.sidebar.page_link("pages/Submit_Application.py", label="Submit Application", icon="📤")
+def ApplyJobs():
+    st.sidebar.page_link("pages/Apply_Jobs.py", label="Submit Applications", icon="📤")
 
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
 def PolStratAdvHomeNav():
@@ -107,7 +107,7 @@ def SideBarLinks(show_home=False):
             ResearchInterviewQuestions()
             SeeReviews()
             ApplicationStatuses()
-            # SubmitApplication()
+            ApplyJobs()
 
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state["role"] == "usaid_worker":

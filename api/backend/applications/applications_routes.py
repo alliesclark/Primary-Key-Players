@@ -60,13 +60,34 @@ def get_job_applications_by_student(student_id):
                 WHERE a.applicant_id = {student_id}
     '''
     
-    cursor = db.cursor()
+    cursor = db.get_db().cursor()
     cursor.execute(query)
     applications = cursor.fetchall()
     
     
     response = make_response(jsonify(applications))
     response.status_code = 200
+    return response
+
+#------------------------------------------------------------
+# Create a new application
+@job_applications.route('/applications', methods=['POST'])
+def create_application():
+    
+    data = request.get_json()
+    applicant_id = data['applicant_id']
+    job_position_id = data['job_position_id']
+    
+    query = f'''INSERT INTO application (applicant_id, job_position_id)
+                VALUES ({applicant_id}, {job_position_id})
+    '''
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    response = make_response(jsonify({'message': 'Application created'}))
+    response.status_code = 201
     return response
 
       

@@ -21,18 +21,20 @@ job_position = Blueprint('job-position', __name__)
 @job_position.route('/job-position', methods=['GET'])
 def get_job_position():
     query = '''
-        SELECT  id, 
-                title, 
-                description, 
-                still_accepting, 
-                num_applicants,
-                postedAt,
-                updatedAt,
-                location,
-                desired_skills,
-                targeted_majors,
-                company_id 
-        FROM job_position
+        SELECT  j.id, 
+                j.title as title, 
+                j.description as description, 
+                j.still_accepting as still_accepting, 
+                j.num_applicants as num_applicants,
+                j.postedAt as postedAt,
+                j.updatedAt as updatedAt,
+                j.location as location,
+                j.desired_skills as desired_skills,
+                j.targeted_majors as targeted_majors,
+                j.company_id as company_id,
+                c.name as company_name 
+        FROM job_position j
+        JOIN company c ON j.company_id = c.id
     '''
     
     # get a cursor object from the database

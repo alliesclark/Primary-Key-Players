@@ -22,7 +22,7 @@ except:
 
 def InterviewQuestionCard(question):
     with ui.element("div", key=f"interview_question_{question['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
-        ui.element("h3", children=[question["question"]], className="text-xl font-bold text-gray-800", key=f"interview_question{question['id']}")
+        ui.element("h3", children=[question["question"]], className="text-xl font-bold text-gray-600", key=f"interview_question{question['id']}")
         
 
 if data and isinstance(data, list):
@@ -30,4 +30,4 @@ if data and isinstance(data, list):
             InterviewQuestionCard(job)
     
 else:
-    ui.element("h3", children=["No interview questions found"], className="text-xl font-bold text-gray-800")
+    ui.element("h3", children=["No interview questions found"], className="text-xl font-bold text-gray-600")
