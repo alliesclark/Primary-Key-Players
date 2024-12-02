@@ -11,7 +11,7 @@ st.set_page_config(layout = 'wide', page_title='Co-op Connect')
 SideBarLinks(show_home=True)
 
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_jobs_card"):
-    ui.element("h2", children=["Welcom Maura!"], className="text-2xl font-bold text-gray-800", key="maura_welcome")
+    ui.element("h2", children=["Welcome Maura!"], className="text-2xl font-bold text-gray-800", key="maura_welcome")
     ui.element("div", children=["\n\n"], key="maura_divider")
     ui.element("p", children=["As a student on the search for their first co-op, this page will be your hub for key resources most useful to you."], className="text-gray-600")
     
