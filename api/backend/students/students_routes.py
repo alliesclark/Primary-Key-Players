@@ -62,15 +62,17 @@ def get_students():
 @students.route('/students/<id>', methods=['GET'])
 def get_student_detail (id):
 
-    query = f'''s.id, 
-                s.name, 
-                s.email, 
-                s.gpa, 
-                m.name AS major_name,
-                s.grad_year,
-                c.name AS advisor_name 
-            FROM student s JOIN major m ON s.major_id = m.id JOIN coop_advisor c ON c.id = s.advised_by
-            WHERE id = {str(id)}
+    query = f'''SELECT s.id AS student_id, 
+                       s.name AS name, 
+                       s.email AS email, 
+                       s.gpa as gpa, 
+                       m.id AS major_id,
+                       s.grad_year,
+                       c.id AS advised_by
+                FROM student s 
+                JOIN major m ON s.major_id = m.id 
+                JOIN coop_advisor c ON c.id = s.advised_by
+                WHERE s.id = {str(id)}
     '''
     
     # logging the query for debugging purposes.
@@ -233,7 +235,7 @@ def add_student():
 
 #------------------------------------------------------------
 # Update a student in the database
-@students.route('/students/<id>', methods=['PUT'])
+@students.route('/students/<student_id>', methods=['PUT'])
 def update_student(student_id):
     student_data = request.json
     current_app.logger.info(student_data)

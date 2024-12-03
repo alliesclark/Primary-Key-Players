@@ -15,23 +15,22 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 data = {} 
 try:
-    data = requests.get("http://api:4000/s/students/" + str(st.session_state['id'])).json()
+    data = requests.get("http://api:4000/s/students/" + str(st.session_state['updating_student_id'])).json()
+    logger.info(f"Retrieved student data: {data}")
     ui.element("h3", children=["Student"], className="text-xl font-bold text-gray-800")  
 except:
     logger.error("Error retrieving data from the API")
-    data = []  
     
 
-
-def updateStudent(student, updated_data):
+def updateStudent(student_id, updated_data):
     try:
         response = requests.put(
-            f'http://api:4000/s/students', 
+            f'http://api:4000/s/students/{student_id}', 
             json=updated_data
         )
         
         if response.status_code == 200:
-            logger.info(f"Student updated successfully: {student['id']}")
+            logger.info(f"Student updated successfully: {student_id}")
         else:
             ui.element(
                 "p",
@@ -39,7 +38,7 @@ def updateStudent(student, updated_data):
                     f"Failed to update student: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
-                key=f"update_student_error_{student['id']}"
+                key=f"update_student_error_{student_id}"
             )
     except Exception as e:
         logger.error(f"Error updating student: {str(e)}")
@@ -49,70 +48,59 @@ def updateStudent(student, updated_data):
                 "Failed to update student: Unknown error"
             ],
             className="text-red-500",
-            key=f"update_student_error_{student['id']}"
+            key=f"update_student_error_{student_id}"
         )
 
 def UpdateProfileCard(student):
     st.header("Edit Student Profile")
-    updated_name = st.text_input("Name:", value=student['name'])
-    updated_email = st.text_input("Email:", value=student['email'])
-    updated_gpa = st.text_input("GPA:", value=student['gpa'])
-    # majors = []
-    # try:
-    #     majors = requests.get('http://api:4000/m/majors').json()
-    # except Exception as e:
-    #     logger.error(f"Error retrieving company data: {e}")
-    #     majors = []
+    updated_name = st.text_input(label="Name:", value=student['name'])
+    updated_email = st.text_input(label="Email:", value=student['email'])
+    updated_grad_year = st.number_input(label="Graduation Year:", value=student['grad_year'], step=1)
+    updated_gpa = st.text_input(label="GPA:", value=student['gpa'])
+    
+    majors = []
+    try:
+        majors = requests.get('http://api:4000/m/majors').json()
+    except Exception as e:
+        logger.error(f"Error retrieving company data: {e}")
+        majors = []
 
-    # major_options = {major['name']: major["id"] for major in majors}
-    # desired_major = ui.select(options=list(major_options.keys()), label="Select a major:")
-    # desired_major_id = major_options.get(desired_major)
-    # st.session_state['major'] = desired_major_id
+    major_options = {major['name']: major["id"] for major in majors}
+    st.write("Select major:\n")
+    desired_major = ui.select(options=list(major_options.keys()), label="Select major:", key="major_select")
+    updated_major_id = major_options.get(desired_major)
+    
+    advisors = []
+    try:
+        advisors = requests.get('http://api:4000/ad/advisors').json()
+        
+    except Exception as e:
+        logger.error(f"Error retrieving company data: {e}")
+        advisors = []
 
-    updated_major = st.text_input("Major:", value=student['major_name'])
-    updated_grad_year = st.number_input("Graduation Year:", value=student['grad_year'], step=1)
-    updated_advisor = st.text_input("Advisor:", value=student['advisor_name'])
-    # advisors = []
-    # try:
-    #     advisors = requests.get('http://api:4000/m/majors').json()
-    # except Exception as e:
-    #     logger.error(f"Error retrieving company data: {e}")
-    #     advisors = []
+    advisor_options = {advisor['name']: advisor['id'] for advisor in advisors}
+    st.write("Select advisor:\n")
+    desired_advisor = ui.select(options=list(advisor_options.keys()), label="Select advisor:", key="advisor_select")
+    updated_advisor_id = advisor_options.get(desired_advisor)
 
-    # advisor_options = {advisor['name']: advisor["id"] for advisor in advisors}
-    # desired_major = ui.select(options=list(major_options.keys()), label="Select an advisor:")
-    # desired_major_id = major_options.get(desired_major)
-    # st.session_state['major'] = desired_major_id
-
-    saveBtn = ui.button("Save", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['id']}")
+    saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['student_id']}")
     
     if saveBtn:
         updated_data = {
-            "id": student['id'],
             "name": updated_name,
             "email": updated_email,
             "gpa": updated_gpa,
-            "major_name": updated_major,
+            "major_id": updated_major_id,
             "grad_year": updated_grad_year,
-            "advisor_name": updated_advisor,
+            "advised_by": updated_advisor_id,
         }
         try:
-            updateStudent(student, updated_data)
+            updateStudent(student['student_id'], updated_data)
             st.success("Profile updated successfully!")
             st.switch_page('pages/Student_Profiles.py')
         except Exception as e:
             st.error(f"Error updating profile: {str(e)}")
 
-# if data and isinstance(data, list):
-#     if data:
-#         for student in data:
-#             if student['id'] == st.session_state['id']:
-#                 UpdateProfileCard(student)
-#     else:
-#         ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
-# else:
-#     ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
-
 if data:
-    UpdateProfileCard(data)
+    UpdateProfileCard(data[0])
     

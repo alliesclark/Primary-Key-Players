@@ -92,9 +92,9 @@ def StudentProfileCard(student):
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
     with col1:
-        updateBtn = ui.button("Update", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_student_{student['id']}")
+        updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_student_{student['id']}")
         if updateBtn:
-            st.session_state['id'] = student['id']
+            st.session_state['updating_student_id'] = student['id']
             st.switch_page('pages/Update_Student.py')
 
 

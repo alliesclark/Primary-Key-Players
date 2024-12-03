@@ -10,17 +10,18 @@ from backend.db_connection import db
 #------------------------------------------------------------
 # Create a new Blueprint object, which is a collection of 
 # routes.
-majors = Blueprint('majors', __name__)
+advisors = Blueprint('advisors', __name__)
 
 #------------------------------------------------------------
 # Get all the applications
-@majors.route('/majors', methods=['GET'])
-def get_all_majors():
+@advisors.route('/advisors', methods=['GET'])
+def get_coop_advisors():
     
     query = f'''SELECT id,
                        name,
-                       department
-                FROM major
+                       email,
+                       department_id
+                FROM coop_advisor
     '''
     
     cursor = db.get_db().cursor()
