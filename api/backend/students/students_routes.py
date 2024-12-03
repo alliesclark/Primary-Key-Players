@@ -30,7 +30,7 @@ def get_students():
                 s.gpa, 
                 m.name AS major_name,
                 s.grad_year,
-                c.name AS advisor_name 
+                c.name AS advisor_name
         FROM student s JOIN major m ON s.major_id = m.id JOIN coop_advisor c ON c.id = s.advised_by
     '''
     
@@ -105,14 +105,18 @@ def get_student_detail (id):
 @students.route('/students/major/<major>', methods=['GET'])
 def get_students_by_major (major):
 
-    query = f'''SELECT id, 
-                       name, 
-                       email, 
-                       gpa, 
-                       major_id,
-                       grad_year,
-                       advised_by 
-                FROM student 
+    query = f'''SELECT s.id, 
+                s.name, 
+                s.email, 
+                s.gpa, 
+                m.name AS major_name,
+                s.grad_year,
+                c.name AS advisor_name,
+                s.past_job AS past_job,
+                j.title AS past_job_name
+        FROM student s JOIN major m ON s.major_id = m.id 
+        JOIN coop_advisor c ON c.id = s.advised_by
+        LEFT JOIN job_position j ON j.id = s.past_job
                 WHERE major_id = {str(major)}
     '''
     
