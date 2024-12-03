@@ -21,11 +21,19 @@ except:
     logger.error("Error retrieving data from the API")
     data = []  
     
-def deleteStudent(student):
+def deleteStudent(student_id, student_name):
     try:
-        response = requests.delete(f'http://api:4000/s/students/{student["id"]}')
+        response = requests.delete(f'http://api:4000/s/students/{student_id}')
         if response.status_code == 200:
-            logger.info(f"Student deleted {student['id']}")    
+            logger.info(f"Student deleted: {student_id}")
+            ui.alert_dialog(
+            show=True, 
+            title="Deleted Student", 
+            description=f"The student profile under the name {student_name} has been deleted.", 
+            confirm_label="OK", 
+            cancel_label="Cancel", 
+            key=f"delete_dialog_{student_id}"
+            )
         else:
             ui.element(
                 "p",
@@ -33,28 +41,26 @@ def deleteStudent(student):
                     f"Failed to delete student: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
-                key=f"delete_student_error_{student['id']}"
+                key=f"delete_student_error_{student_id}"
             )
-    except:
-        logger.error("Error deleting student")
+    except Exception as e:
+        logger.error(f"Error deleting student {student_id}: {str(e)}")
         ui.element(
             "p",
-            children=[
-                f"Failed to delete student: Unknown error"
-            ],
+            children=["Failed to delete student: Unknown error"],
             className="text-red-500",
-            key=f"delete_student_error_{student['id']}"
+            key=f"delete_student_error_{student_id}"
         )
 
-def updateStudent(student, updated_data):
+
+def updateStudent(student_id, updated_data):
     try:
         response = requests.put(
-            f'http://api:4000/s/students', 
+            f'http://api:4000/s/students/{student_id}',
             json=updated_data
         )
-        
         if response.status_code == 200:
-            logger.info(f"Student updated successfully: {student['id']}")
+            logger.info(f"Student updated successfully: {student_id}")
         else:
             ui.element(
                 "p",
@@ -62,28 +68,27 @@ def updateStudent(student, updated_data):
                     f"Failed to update student: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
-                key=f"update_student_error_{student['id']}"
+                key=f"update_student_error_{student_id}"
             )
     except Exception as e:
-        logger.error(f"Error updating student: {str(e)}")
+        logger.error(f"Error updating student {student_id}: {str(e)}")
         ui.element(
             "p",
-            children=[
-                "Failed to update student: Unknown error"
-            ],
+            children=["Failed to update student: Unknown error"],
             className="text-red-500",
-            key=f"update_student_error_{student['id']}"
+            key=f"update_student_error_{student_id}"
         )
 
+
 def StudentProfileCard(student):
-    with ui.element("div", key=f"student_card_{student['id']}", className="p-4 m-2 shadow-lg rounded-lg border"): 
+    with ui.element("div", key=f"student_card_{student['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
         ui.element("h3", children=[f"Name: {student['name']}"], className="text-xl font-bold text-gray-800")
         ui.element("p", children=[f"Email: {student['email']}"], className="text-gray-600")
         ui.element("p", children=[f"GPA: {student['gpa']}"], className="text-gray-600")
         ui.element("p", children=[f"Major: {student['major_name']}"], className="text-gray-600")
         ui.element("p", children=[f"Grad Year: {student['grad_year']}"], className="text-gray-600")
-        ui.element("p", children=[f"Advised By: {student['advisor_name']}"], className="text-gray-600") 
-    
+        ui.element("p", children=[f"Advised By: {student['advisor_name']}"], className="text-gray-600")
+
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
     with col1:
@@ -96,16 +101,8 @@ def StudentProfileCard(student):
     with col2:
         deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_student_{student['id']}")
         if deleteBtn:
-            deleteStudent(student)
-            ui.alert_dialog(
-                show=True, 
-                title="Deleted Student", 
-                description=f"The student profile under the name {student['name']} has been deleted.", 
-                confirm_label="OK", 
-                cancel_label="Cancel", 
-                key=f"alert_dialog_{student['id']}"
-                )
-
+            deleteStudent(student['id'], student['name'])
+           
 
 
 if data and isinstance(data, list):
@@ -116,6 +113,3 @@ if data and isinstance(data, list):
         ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
 else:
     ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
-
-
-    

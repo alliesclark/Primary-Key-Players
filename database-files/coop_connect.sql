@@ -139,8 +139,8 @@ CREATE TABLE
         student_id INT NOT NULL,
         job_position_id INT NOT NULL,
         -- one-to-many
-        CONSTRAINT fk_review_student FOREIGN KEY (student_id) REFERENCES student (id),
-        CONSTRAINT fk_review_job_position FOREIGN KEY (job_position_id) REFERENCES job_position (id)
+        CONSTRAINT fk_review_student FOREIGN KEY (student_id) REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
+        CONSTRAINT fk_review_job_position FOREIGN KEY (job_position_id) REFERENCES job_position (id) ON UPDATE CASCADE ON DELETE CASCADE
     );
 
 CREATE TABLE

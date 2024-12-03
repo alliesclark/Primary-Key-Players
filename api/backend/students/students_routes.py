@@ -233,53 +233,18 @@ def add_student():
 
 #------------------------------------------------------------
 # Update a student in the database
-@students.route('/students', methods=['PUT'])
-def update_student():
-    # Collecting data from the request object
+@students.route('/students/<id>', methods=['PUT'])
+def update_student(student_id):
     student_data = request.json
     current_app.logger.info(student_data)
 
-    # Extracting the variables
-    student_id = student_data['id']
     name = student_data['name']
     email = student_data['email']
     gpa = student_data['gpa']
-    major_id = st.session_state['major']
-    # cursor1 = db.get_db().cursor()
-    # cursor1.execute('''
-    #     SELECT m.name AS Name, m.id AS ID
-    #     FROM major m 
-    # ''')
-    # row = cursor1.fetchone()
-    # if student_data['major_name'] == row['Name']:
-    #     major_id = row['ID']
-    # else: 
-    #     major_id = '''
-    #     SELECT s.major_id
-    #     FROM student s
-    #     WHERE s.id = st.session_state['id']
-    # '''
-
+    major_id = student_data['major_id']
     grad_year = student_data['grad_year']
+    advised_by = student_data['advised_by']
 
-    # cursor2 = db.get_db().cursor()
-    # cursor2.execute('''
-    #     SELECT c.name AS Name, c.id AS ID
-    #     FROM coop_advisor c 
-    # ''')
-    # row1 = cursor2.fetchone()
-    # if student_data['advisor_name'] == row['Name']:
-    #     advised_by = row1['ID']
-    # else:
-    #     cursor3 = db.get_db().cursor()
-    #     cursor3.execute('''
-    #         SELECT s.advised_by
-    #         FROM student s
-    #         WHERE s.id = st.session_state['id']
-    #     ''')
-    #     advised_by = row
-
-    # Constructing the query
     query = f'''
         UPDATE student
         SET name = '{name}', email = '{email}', gpa = {gpa}, major_id = {major_id}, grad_year = {grad_year}, advised_by = {advised_by}
@@ -287,7 +252,6 @@ def update_student():
     '''
     current_app.logger.info(query)
 
-    # Executing and committing the update statement
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -299,7 +263,7 @@ def update_student():
 
 #------------------------------------------------------------
 # Delete a student from the database
-@students.route('/students/<id>', methods=['DELETE'])
+@students.route('/students/<student_id>', methods=['DELETE'])
 def delete_student(student_id):
     
     query = f'''DELETE FROM student WHERE id = {student_id}
