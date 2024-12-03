@@ -69,13 +69,14 @@ def ApplicationCard(application):
             className="text-gray-400 text-sm",
             key=f"application_applied_at_{application['id']}"
         )
-        
+    
+    # doing 8 columns makes the layout a lot nicer
+    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+    with col1:
         deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_application_{application['id']}")
         if deleteBtn:
             deleteApplication(application)
-        ui.alert_dialog(show=deleteBtn, title="Deleted Application", description=f"Your application for the role of {application['job_title']} at {application['company_name']} has been deleted.", confirm_label="OK", cancel_label="Cancel", key=f"alert_dialog_{application['id']}")
-
-
+    ui.alert_dialog(show=deleteBtn, title="Deleted Application", description=f"Your application for the role of {application['job_title']} at {application['company_name']} has been deleted.", confirm_label="OK", cancel_label="Cancel", key=f"alert_dialog_{application['id']}")
 
 
 if data and isinstance(data, list):

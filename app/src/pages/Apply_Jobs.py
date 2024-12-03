@@ -91,37 +91,26 @@ def JobCard(job):
         # Timestamps
         ui.element("p", children=[f"Posted At: {job['postedAt']}"], className="text-gray-400 text-sm", key=f"job_posted_{job['id']}")
         ui.element("p", children=[f"Updated At: {job['updatedAt']}"], className="text-gray-400 text-sm", key=f"job_updated_{job['id']}")
-
-        # Button Section: Flex alignment
-        with ui.element("div", className="flex justify-end mt-4"):
-            # Already Applied or Apply Button
-            already_applied = False
-            try:
-                applications = requests.get(f'http://api:4000/a/applications/{desired_student_id}').json()
-                already_applied = any(application["job_position_id"] == job["id"] for application in applications)
-            except requests.exceptions.RequestException as e:
-                logger.error(f"Failed to get applications for student {desired_student_id}: {str(e)}")
-
-            if already_applied:
-                ui.element(
-                    "p",
-                    children=["You have already applied for this job"],
-                    className="text-gray-800 font-bold text-sm",
-                    key=f"already_applied_{job['id']}"
-                )
-            else:
-                # Apply Button
-                applied = ui.button(
-                    "Apply",
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md",
-                    key=f"apply_button_{job['id']}"
-                )
-                if applied:
-                    submit_application(job)
-
-
+    
+    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+    already_applied = False
+    try:
+        applications = requests.get(f'http://api:4000/a/applications/{desired_student_id}').json()
+        already_applied = any(application["job_position_id"] == job["id"] for application in applications)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to get applications for student {desired_student_id}: {str(e)}")
         
+    with col1:  
+        applied = ui.button(
+            text="Applied" if already_applied else "Apply",
+            className="bg-gray-400 text-white px-4 py-2 rounded-md w-fit" if already_applied else  "bg-blue-500 text-white px-4 py-2 rounded-md",
+            variant="disabled" if already_applied else "default",
+            key=f"apply_button_{job['id']}"
+        )
+        if applied:
+            submit_application(job)
 
+                
 
 # Render Job Cards
 if data and isinstance(data, list):
