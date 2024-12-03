@@ -13,18 +13,6 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("div", children=["\n\n"], key="view_jobs_divider")
     ui.element("p", children=["It is now time to finally apply to available job positions. You can easily submit an application by simply clicking the `Apply` button above the position."], className="text-gray-600")
 
-# Get all students
-students = {}
-try:
-    students = requests.get('http://api:4000/s/students').json()
-    ui.element("h3", children=["Students"], className="text-xl font-bold text-gray-800")
-except:
-    logger.error("Error retrieving data from the API")
-    students = []
-
-student_options = {student['name']: student["id"] for student in students}
-desired_student = ui.select(options=list(student_options.keys()), label="Select student:")
-desired_student_id = student_options.get(desired_student)
 
 # Get all jobs
 data = {} 
@@ -37,8 +25,9 @@ except:
     
     
 def submit_application(job):
+    # Hardcoding the student id for now as Maura always has student 1 in the database
     application = {
-        "applicant_id": desired_student_id, 
+        "applicant_id": 1, 
         "job_position_id": job["id"],
     }
     try:
@@ -95,10 +84,10 @@ def JobCard(job):
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
     already_applied = False
     try:
-        applications = requests.get(f'http://api:4000/a/applications/{desired_student_id}').json()
+        applications = requests.get(f'http://api:4000/a/applications/{1}').json()
         already_applied = any(application["job_position_id"] == job["id"] for application in applications)
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to get applications for student {desired_student_id}: {str(e)}")
+        logger.error(f"Failed to get applications for student {1}: {str(e)}")
         
     with col1:  
         applied = ui.button(

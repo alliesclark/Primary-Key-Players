@@ -53,10 +53,12 @@ def get_job_applications_by_student(student_id):
                     a.status,
                     a.applied_at,
                     s.name as student_name,
-                    j.title as job_title
+                    j.title as job_title,
+                    c.name as company_name
                 FROM application a
                 JOIN student s ON a.applicant_id = s.id
                 JOIN job_position j ON a.job_position_id = j.id
+                JOIN company c ON j.company_id = c.id
                 WHERE a.applicant_id = {student_id}
     '''
     

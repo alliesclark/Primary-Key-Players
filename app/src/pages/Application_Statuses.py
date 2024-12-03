@@ -15,7 +15,8 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 data = {} 
 try:
-    data = requests.get('http://api:4000/a/applications').json()
+    # maura always has student 1 in the database so we are hardcoding this for now
+    data = requests.get('http://api:4000/a/applications/1').json()
 except:
     logger.error("Error retrieving data from the API")
     data = []  
