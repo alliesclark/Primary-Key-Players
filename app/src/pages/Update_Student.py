@@ -20,6 +20,8 @@ try:
 except:
     logger.error("Error retrieving data from the API")
     data = []  
+    
+
 
 def updateStudent(student, updated_data):
     try:
