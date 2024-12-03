@@ -18,7 +18,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 with ui.element("div", className="flex flex-row justify-center items-center", key="wade_buttons"):
     with ui.element("div", className="flex flex-col m-2", key="wade_button_1"):
         if ui.button(text="Post Reviews", key="1", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/Post_Review.py')
+            st.switch_page('pages/Update_Student.py')
     with ui.element("div", className="flex flex-col m-2", key="wade_button_2"):
         if ui.button(text="Post Interview Questions", key="2", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Research_Interview_Questions.py')

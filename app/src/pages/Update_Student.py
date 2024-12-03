@@ -21,7 +21,9 @@ except:
     logger.error("Error retrieving data from the API")
     data = []  
     
-
+# Ensure 'id' is initialized in session_state before using it
+if 'id' not in st.session_state:
+    st.session_state['id'] = None
 
 def updateStudent(student, updated_data):
     try:
