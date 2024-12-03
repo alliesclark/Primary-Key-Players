@@ -8,6 +8,7 @@ from backend.companies.company_routes import company
 from backend.reviews.reviews_routes import reviews
 from backend.recruiters.recruiters_routes import recruiters
 from backend.applications.applications_routes import job_applications
+from backend.majors.majors_routes import majors
 import os
 from dotenv import load_dotenv
 
@@ -50,6 +51,7 @@ def create_app():
     app.register_blueprint(reviews, url_prefix='/r')
     app.register_blueprint(recruiters, url_prefix='/re')
     app.register_blueprint(job_applications, url_prefix='/a')
+    app.register_blueprint(majors, url_prefix='/m')
 
     # Don't forget to return the app object
     return app

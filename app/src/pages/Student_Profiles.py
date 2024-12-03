@@ -84,23 +84,27 @@ def StudentProfileCard(student):
         ui.element("p", children=[f"Grad Year: {student['grad_year']}"], className="text-gray-600")
         ui.element("p", children=[f"Advised By: {student['advisor_name']}"], className="text-gray-600") 
     
-    updateBtn = ui.button("Update", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_student_{student['id']}")
-    if updateBtn:
-        st.session_state['id'] = student['id']
-        st.switch_page('pages/Update_Student.py')
+    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+
+    with col1:
+        updateBtn = ui.button("Update", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_student_{student['id']}")
+        if updateBtn:
+            st.session_state['id'] = student['id']
+            st.switch_page('pages/Update_Student.py')
 
 
-    deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_student_{student['id']}")
-    if deleteBtn:
-        deleteStudent(student)
-        ui.alert_dialog(
-            show=True, 
-            title="Deleted Student", 
-            description=f"The student profile under the name {student['name']} has been deleted.", 
-            confirm_label="OK", 
-            cancel_label="Cancel", 
-            key=f"alert_dialog_{student['id']}"
-            )
+    with col2:
+        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_student_{student['id']}")
+        if deleteBtn:
+            deleteStudent(student)
+            ui.alert_dialog(
+                show=True, 
+                title="Deleted Student", 
+                description=f"The student profile under the name {student['name']} has been deleted.", 
+                confirm_label="OK", 
+                cancel_label="Cancel", 
+                key=f"alert_dialog_{student['id']}"
+                )
 
 
 
