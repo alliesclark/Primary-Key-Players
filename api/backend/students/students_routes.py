@@ -62,15 +62,15 @@ def get_students():
 @students.route('/students/<id>', methods=['GET'])
 def get_student_detail (id):
 
-    query = f'''SELECT id, 
-                       name, 
-                       email, 
-                       gpa, 
-                       major_id,
-                       grad_year,
-                       advised_by 
-                FROM student 
-                WHERE id = {str(id)}
+    query = f'''s.id, 
+                s.name, 
+                s.email, 
+                s.gpa, 
+                m.name AS major_name,
+                s.grad_year,
+                c.name AS advisor_name 
+            FROM student s JOIN major m ON s.major_id = m.id JOIN coop_advisor c ON c.id = s.advised_by
+            WHERE id = {str(id)}
     '''
     
     # logging the query for debugging purposes.
@@ -244,9 +244,40 @@ def update_student():
     name = student_data['name']
     email = student_data['email']
     gpa = student_data['gpa']
-    major_id = student_data['major_id']
+    major_id = st.session_state['major']
+    # cursor1 = db.get_db().cursor()
+    # cursor1.execute('''
+    #     SELECT m.name AS Name, m.id AS ID
+    #     FROM major m 
+    # ''')
+    # row = cursor1.fetchone()
+    # if student_data['major_name'] == row['Name']:
+    #     major_id = row['ID']
+    # else: 
+    #     major_id = '''
+    #     SELECT s.major_id
+    #     FROM student s
+    #     WHERE s.id = st.session_state['id']
+    # '''
+
     grad_year = student_data['grad_year']
-    advised_by = student_data['advised_by']
+
+    # cursor2 = db.get_db().cursor()
+    # cursor2.execute('''
+    #     SELECT c.name AS Name, c.id AS ID
+    #     FROM coop_advisor c 
+    # ''')
+    # row1 = cursor2.fetchone()
+    # if student_data['advisor_name'] == row['Name']:
+    #     advised_by = row1['ID']
+    # else:
+    #     cursor3 = db.get_db().cursor()
+    #     cursor3.execute('''
+    #         SELECT s.advised_by
+    #         FROM student s
+    #         WHERE s.id = st.session_state['id']
+    #     ''')
+    #     advised_by = row
 
     # Constructing the query
     query = f'''

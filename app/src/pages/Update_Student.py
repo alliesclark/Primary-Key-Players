@@ -15,15 +15,13 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 data = {} 
 try:
-    data = requests.get('http://api:4000/s/students').json()
+    data = requests.get("http://api:4000/s/students/" + str(st.session_state['id'])).json()
     ui.element("h3", children=["Student"], className="text-xl font-bold text-gray-800")  
 except:
     logger.error("Error retrieving data from the API")
     data = []  
     
-# Ensure 'id' is initialized in session_state before using it
-if 'id' not in st.session_state:
-    st.session_state['id'] = None
+
 
 def updateStudent(student, updated_data):
     try:
@@ -54,31 +52,38 @@ def updateStudent(student, updated_data):
             key=f"update_student_error_{student['id']}"
         )
 
-# def UpdateProfileCard(student):
-#         updated_name = st.text_input("Name:", value=f"{student['name']}")
-#         saveBtn = ui.button("Save", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['id']}")
-#         if saveBtn:
-#             updated_data = {
-#                 "id": student['id'],  # Ensure the student ID is included for updating
-#                 "name": updated_name,
-#                 "email": student['email'],
-#                 "gpa": student['gpa'],
-#                 "major_name": student['major_name'],
-#                 "grad_year": student['grad_year'],
-#                 "advisor_name": student['advisor_name'],
-#             }
-#             updateStudent(student, updated_data)
-#             st.switch_page('pages/Student_Profiles.py')
-
 def UpdateProfileCard(student):
     st.header("Edit Student Profile")
     updated_name = st.text_input("Name:", value=student['name'])
     updated_email = st.text_input("Email:", value=student['email'])
     updated_gpa = st.text_input("GPA:", value=student['gpa'])
+    # majors = []
+    # try:
+    #     majors = requests.get('http://api:4000/m/majors').json()
+    # except Exception as e:
+    #     logger.error(f"Error retrieving company data: {e}")
+    #     majors = []
+
+    # major_options = {major['name']: major["id"] for major in majors}
+    # desired_major = ui.select(options=list(major_options.keys()), label="Select a major:")
+    # desired_major_id = major_options.get(desired_major)
+    # st.session_state['major'] = desired_major_id
+
     updated_major = st.text_input("Major:", value=student['major_name'])
     updated_grad_year = st.number_input("Graduation Year:", value=student['grad_year'], step=1)
     updated_advisor = st.text_input("Advisor:", value=student['advisor_name'])
-    
+    # advisors = []
+    # try:
+    #     advisors = requests.get('http://api:4000/m/majors').json()
+    # except Exception as e:
+    #     logger.error(f"Error retrieving company data: {e}")
+    #     advisors = []
+
+    # advisor_options = {advisor['name']: advisor["id"] for advisor in advisors}
+    # desired_major = ui.select(options=list(major_options.keys()), label="Select an advisor:")
+    # desired_major_id = major_options.get(desired_major)
+    # st.session_state['major'] = desired_major_id
+
     saveBtn = ui.button("Save", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['id']}")
     
     if saveBtn:
@@ -98,28 +103,16 @@ def UpdateProfileCard(student):
         except Exception as e:
             st.error(f"Error updating profile: {str(e)}")
 
-
-
 # if data and isinstance(data, list):
 #     if data:
 #         for student in data:
-#             if student['id'] == id:
+#             if student['id'] == st.session_state['id']:
 #                 UpdateProfileCard(student)
 #     else:
 #         ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
 # else:
 #     ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
 
-# if data:
-#     UpdateProfileCard(data)
-
-if data and isinstance(data, list):
-    if data:
-        for student in data:
-            if student['id'] == st.session_state['id']:
-                UpdateProfileCard(student)
-    else:
-        ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
-else:
-    ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
+if data:
+    UpdateProfileCard(data)
     
