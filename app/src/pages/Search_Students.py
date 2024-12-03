@@ -9,17 +9,37 @@ from modules.nav import SideBarLinks
 SideBarLinks(show_home=True)
 
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_student_card"):
-    ui.element("h2", children=["Manage Students"], className="text-2xl font-bold text-gray-800", key="view_students_title")
-    ui.element("div", children=["\n\n"], key="view_student_profiles_divider")
+    ui.element("h2", children=["Search Student Profiles"], className="text-2xl font-bold text-gray-800", key="view_students_title")
+    ui.element("div", children=["\n\n"], key="view_students_divider")
     ui.element("p", children=["View, add, update, and delete student profiles."], className="text-gray-600")
 
-data = {} 
+majors = []
 try:
-    data = requests.get('http://api:4000/s/students').json()
-    ui.element("h3", children=["Students"], className="text-xl font-bold text-gray-800")  
-except:
-    logger.error("Error retrieving data from the API")
-    data = []  
+    companies = requests.get('http://api:4000/m/majors').json()
+except Exception as e:
+    logger.error(f"Error retrieving company data: {e}")
+    majors = []
+
+major_options = {major['name']: major["id"] for major in majors}
+desired_major = ui.select(options=list(major_options.keys()), label="Select a major:")
+desired_major_id = major_options.get(desired_major)
+
+students_data = []
+if desired_major_id:
+    try:
+        students_data = requests.get(f'http://api:4000/s/students/major/{desired_major_id}').json()
+        logger.info(f"Retrieved students data for major ID: {desired_major_id}")
+        logger.info(f"Students data: {students_data}")
+    except Exception as e:
+        logger.error(f"Error retrieving students data: {e}")
+        students_data = []
+# data = {} 
+# try:
+#     data = requests.get('http://api:4000/s/students').json()
+#     ui.element("h3", children=["Students"], className="text-xl font-bold text-gray-800")  
+# except:
+#     logger.error("Error retrieving data from the API")
+#     data = []  
     
 def deleteStudent(student_id, student_name):
     try:
