@@ -39,7 +39,7 @@ selected_job_position_id = job_position_options.get(selected_job_title)
 saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
 
 # Function to post the review to the server
-def postReview(rating, description, student_name, student_id, job_positions):
+def postReview(rating, description, student_name, student_id, job_position_id):
     try:
         # Review data to be sent to the API
         review_data = {
@@ -47,7 +47,7 @@ def postReview(rating, description, student_name, student_id, job_positions):
             "review": description,
             "student_name": student_name,
             "student_id": student_id,
-            "job_position": job_positions
+            "job_position_id": job_position_id
         }
 
         response = requests.post('http://api:4000/s/reviews', json=review_data)
