@@ -99,6 +99,35 @@ def get_job_applications_by_student(student_id):
     return response
 
 #------------------------------------------------------------
+# Get all the applications for a specific company
+@job_applications.route('/applications/<company_id>', methods=['GET'])
+def get_job_applications_by_company(company_id):
+    
+    query = f'''SELECT a.id, 
+                    a.applicant_id, 
+                    a.job_position_id,
+                    a.status,
+                    a.applied_at,
+                    s.name as student_name,
+                    j.title as job_title,
+                    c.name as company_name
+                FROM application a
+                JOIN student s ON a.applicant_id = s.id
+                JOIN job_position j ON a.job_position_id = j.id
+                JOIN company c ON j.company_id = c.id
+                WHERE c.id = {str(company_id)}
+    '''
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    applications = cursor.fetchall()
+    
+    
+    response = make_response(jsonify(applications))
+    response.status_code = 200
+    return response
+
+#------------------------------------------------------------
 # Create a new application
 @job_applications.route('/applications', methods=['POST'])
 def create_application():
