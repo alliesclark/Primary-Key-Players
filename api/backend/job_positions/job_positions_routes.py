@@ -198,7 +198,8 @@ def get_company_jobs (company_id):
                        j.updatedAt,
                        j.desired_skills,
                        j.targeted_majors,
-                       j.company_id 
+                       j.company_id,
+                       j.location
                 FROM job_position j JOIN company c ON j.company_id = c.id
                 WHERE c.id = {str(company_id)}
     '''
@@ -276,19 +277,28 @@ def add_job_position():
     # Extracting the variables
     title = job_position_data['title']
     description = job_position_data['description']
-    still_accepting = job_position_data['still_accepting']
-    num_applicants = job_position_data['num_applicants']
-    postedAt = job_position_data['postedAt']
-    updatedAt = job_position_data['updatedAt']
+    # still_accepting = job_position_data['still_accepting']
+    still_accepting = 1
+    # num_applicants = job_position_data['num_applicants']
+    num_applicants = 0
+    # postedAt = job_position_data['postedAt']
+    # updatedAt = job_position_data['updatedAt']
     desired_skills = job_position_data['desired_skills']
     targeted_majors = job_position_data['targeted_majors']
     company_id = job_position_data['company_id']
 
     # Constructing the query
+    # query = f'''
+    #     INSERT INTO job_position (title, description, still_accepting, num_applicants, postedAt, updatedAt,
+    #                                 desired_skills, targeted_majors, company_id)
+    #     VALUES ('{title}', '{description}', {still_accepting}, {num_applicants}, {postedAt}, {updatedAt},
+    #                 '{desired_skills}', '{targeted_majors}', '{company_id}')
+    # '''
+    # current_app.logger.info(query)
     query = f'''
-        INSERT INTO job_position (title, description, still_accepting, num_applicants, postedAt, updatedAt,
+        INSERT INTO job_position (title, description, still_accepting, num_applicants,
                                     desired_skills, targeted_majors, company_id)
-        VALUES ('{title}', '{description}', {still_accepting}, {num_applicants}, {postedAt}, {updatedAt},
+        VALUES ('{title}', '{description}', {still_accepting}, {num_applicants},
                     '{desired_skills}', '{targeted_majors}', '{company_id}')
     '''
     current_app.logger.info(query)

@@ -25,7 +25,7 @@ except:
     logger.error("Error retrieving data from the API")
     data = []  
     
-def deleteStudent(job_id, job_title):
+def deleteJobPosting(job_id, job_title):
     try:
         response = requests.delete(f'http://api:4000/j/job-position/{job_id}')
         if response.status_code == 200:
@@ -57,63 +57,45 @@ def deleteStudent(job_id, job_title):
         )
 
 
-def updateStudent(student_id, updated_data):
-    try:
-        response = requests.put(
-            f'http://api:4000/s/students/{student_id}',
-            json=updated_data
+def JobPostingCard(job):
+    with ui.element("div", key=f"job_card_{job['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
+         ui.element("h3", children=[f"{job['title']}"], className="text-xl font-bold text-gray-800", key=f"job_title_{job['id']}")
+         ui.element("p", children=[f"Description: {job['description']}"], className="text-gray-600", key=f"job_desc_{job['id']}")
+         ui.element("p", children=[f"Location: {job['location']}"], className="text-gray-600", key=f"job_location_{job['id']}")
+         ui.element("p", children=[f"Desired Skills: {job['desired_skills']}"], className="text-gray-600", key=f"job_skills_{job['id']}")
+         ui.element("p", children=[f"Targeted Majors: {job['targeted_majors']}"], className="text-gray-600", key=f"job_majors_{job['id']}")
+         ui.element("p", children=[f"Number of Applicants: {job['num_applicants']}"], className="text-gray-600", key=f"job_applicants_{job['id']}")
+         ui.element(
+            "span",
+            children=["Still Accepting: Yes" if job["still_accepting"] else "Still Accepting: No"],
+            className="text-green-500" if job["still_accepting"] else "text-red-500",
+            key=f"job_accepting_{job['id']}",
         )
-        if response.status_code == 200:
-            logger.info(f"Student updated successfully: {student_id}")
-        else:
-            ui.element(
-                "p",
-                children=[
-                    f"Failed to update student: {response.json().get('message', 'Unknown error')}"
-                ],
-                className="text-red-500",
-                key=f"update_student_error_{student_id}"
-            )
-    except Exception as e:
-        logger.error(f"Error updating student {student_id}: {str(e)}")
-        ui.element(
-            "p",
-            children=["Failed to update student: Unknown error"],
-            className="text-red-500",
-            key=f"update_student_error_{student_id}"
-        )
-
-
-def StudentProfileCard(student):
-    with ui.element("div", key=f"student_card_{student['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
-        ui.element("h3", children=[f"Name: {student['name']}"], className="text-xl font-bold text-gray-800")
-        ui.element("p", children=[f"Email: {student['email']}"], className="text-gray-600")
-        ui.element("p", children=[f"GPA: {student['gpa']}"], className="text-gray-600")
-        ui.element("p", children=[f"Major: {student['major_name']}"], className="text-gray-600")
-        ui.element("p", children=[f"Grad Year: {student['grad_year']}"], className="text-gray-600")
-        ui.element("p", children=[f"Advised By: {student['advisor_name']}"], className="text-gray-600")
+         ui.element("p", children=[f"Posted At: {job['postedAt']}"], className="text-gray-400 text-sm", key=f"job_posted_{job['id']}")
+         ui.element("p", children=[f"Updated At: {job['updatedAt']}"], className="text-gray-400 text-sm", key=f"job_updated_{job['id']}")
+      
 
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
     with col1:
-        updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_student_{student['id']}")
+        updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_job_{job['id']}")
         if updateBtn:
-            st.session_state['updating_student_id'] = student['id']
+            st.session_state['updating_job_id'] = job['id']
             st.switch_page('pages/Update_Student.py')
 
 
     with col2:
-        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_student_{student['id']}")
+        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_job_{job['id']}")
         if deleteBtn:
-            deleteStudent(student['id'], student['name'])
+            deleteJobPosting(job['id'], job['title'])
            
 
 
 if data and isinstance(data, list):
     if data:
-        for student in data:
-            StudentProfileCard(student)
+        for job in data:
+            JobPostingCard(job)
     else:
-        ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
+        ui.element("h3", children=["No job postings found."], className="text-xl font-bold text-gray-800")
 else:
-    ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
+    ui.element("h3", children=["No job postings found."], className="text-xl font-bold text-gray-800")
