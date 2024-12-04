@@ -18,54 +18,48 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("div", children=["\n\n"], key="post_review_divider")
 
 # Form to post a new review
-st.header("Post a New Review")
-rating = st.number_input("Rating (1-5):", min_value=1, max_value=5, step=1)
-description = st.text_area("Description:", max_chars=500)
-student_name = st.text_input("Your Name (Student):")
-student_id = st.text_input("Your Student ID:")
-job_position = st.text_input("Job Position (e.g., Software Engineer):")
+st.header("Post an Interview Question")
+question = st.text_area("Question:", max_chars=500)
+job_position_id = st.text_input("Job Position ID:")
 
-saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
+saveBtn = ui.button("Submit Question", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
 
 # Function to post the review to the server
-def postReview(rating, description, student_name, student_id, job_position):
+def postQuestion(question, job_position_id, author_id):
     try:
         # Review data to be sent to the API
         review_data = {
-            "rating": rating,
-            "review": description,
-            "student_name": student_name,
-            "student_id": student_id,
-            "job_position": job_position
+            "question": question,
+            "job_position_id": job_position_id,
         }
 
-        response = requests.post('http://api:4000/s/reviews', json=review_data)
+        response = requests.post('http://api:4000/s/interview_questions', json=review_data)
 
         if response.status_code == 200:
-            logger.info("Review posted successfully.")
-            st.success("Review posted successfully!")
-            st.switch_page('pages/See_Reviews.py')  # Optional: Navigate to the reviews page after posting
+            logger.info("Question posted successfully.")
+            st.success("Question posted successfully!")
+            st.switch_page('pages/Research_Interview_Questions.py')  # Optional: Navigate to the reviews page after posting
         else:
             ui.element(
                 "p",
                 children=[
-                    f"Failed to post review: {response.json().get('message', 'Unknown error')}"
+                    f"Failed to post question: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
                 key="post_review_error"
             )
     except Exception as e:
-        logger.error(f"Error posting review: {str(e)}")
+        logger.error(f"Error posting question: {str(e)}")
         ui.element(
             "p",
-            children=["Failed to post review: Unknown error"],
+            children=["Failed to post question: Unknown error"],
             className="text-red-500",
             key="post_review_error"
         )
 
 # If the save button is pressed, submit the review
 if saveBtn:
-    if rating and description and student_name and student_id and job_position:
-        postReview(rating, description, student_name, student_id, job_position)
+    if question and job_position_id:
+        postQuestion(question, job_position_id)
     else:
-        st.error("Please fill in all the fields to submit your review.")
+        st.error("Please fill in all the fields to post this question.")
