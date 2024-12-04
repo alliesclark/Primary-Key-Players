@@ -15,7 +15,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 data = {} 
 try:
-    data = requests.get("http://api:4000/j/job-positions/" + str(st.session_state['updating_job_id'])).json()
+    data = requests.get("http://api:4000/j/job-position/" + str(st.session_state['updating_job_id'])).json()
     logger.info(f"Retrieved job posting data: {data}")
     ui.element("h3", children=["Job"], className="text-xl font-bold text-gray-800")  
 except:
@@ -53,40 +53,39 @@ def updateJob(job_id, updated_data):
 
 def UpdateJobCard(job):
     updated_title = st.text_input(label="Title:", value=job['title'])
-    updated_description = st.text_area(label="Email:", value=student['email'])
-    updated_location = st.text_input(label="Email:", value=student['email'])
-    updated_desired_skills = st.number_input(label="Graduation Year:", value=student['grad_year'], step=1)
-    updated_targeted_majors = st.text_input(label="GPA:", value=student['gpa'])
-    updated_num_applicants = st.text_input(label="GPA:", value=student['gpa'])
-    data_still_accepting = st.text_input(label="GPA:", value=student['gpa'])
-    
-    majors = []
-    try:
-        majors = requests.get('http://api:4000/m/majors').json()
-    except Exception as e:
-        logger.error(f"Error retrieving company data: {e}")
-        majors = []
+    updated_description = st.text_area(label="Description:", value=job['description'], max_chars=500)
+    updated_location = st.text_input(label="Location:", value=job['location'])
+    updated_desired_skills = st.text_input(label="Desired Skills:", value=job['desired_skills'])
+    updated_targeted_majors = st.text_input(label="Targeted Majors:", value=job['targeted_majors'])
+    updated_num_applicants = st.text_input(label="Number of Applicants:", value=job['num_applicants'])
+    if job['still_accepting'] == 1:
+        data_still_accepting = st.text_input(label="Still Accepting:", value='Yes')
+    if job['still_accepting'] == 0:
+        data_still_accepting = st.text_input(label="Still Accepting:", value='No')
+    if data_still_accepting == 'Yes' or data_still_accepting == 'yes':
+        updated_still_accepting = 1
+    else:
+        updated_still_accepting = 0
 
-    
-
-    saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['student_id']}")
+    saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_job_{job['id']}")
     
     if saveBtn:
         updated_data = {
-            "name": updated_name,
-            "email": updated_email,
-            "gpa": updated_gpa,
-            "major_id": updated_major_id,
-            "grad_year": updated_grad_year,
-            "advised_by": updated_advisor_id,
+            "title": updated_title,
+            "description": updated_description,
+            "location": updated_location,
+            "desired_skills": updated_desired_skills,
+            "targeted_majors": updated_targeted_majors,
+            "num_applicants": updated_num_applicants,
+            "still_accepting": updated_still_accepting
         }
         try:
-            updateStudent(student['student_id'], updated_data)
-            st.success("Profile updated successfully!")
-            st.switch_page('pages/Student_Profiles.py')
+            updateJob(job['id'], updated_data)
+            st.success("Job posting updated successfully!")
+            st.switch_page('pages/Manage_Job_Postings.py')
         except Exception as e:
             st.error(f"Error updating profile: {str(e)}")
 
 if data:
-    UpdateProfileCard(data[0])
+    UpdateJobCard(data[0])
     

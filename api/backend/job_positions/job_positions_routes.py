@@ -67,7 +67,8 @@ def get_specific_job (id):
 
     query = f'''SELECT id, 
                        title, 
-                       description, 
+                       description,
+                       location, 
                        still_accepting, 
                        num_applicants,
                        postedAt,
@@ -314,8 +315,6 @@ def update_job_position(job_id):
     description = job_position_data['description']
     still_accepting = job_position_data['still_accepting']
     num_applicants = job_position_data['num_applicants']
-    # postedAt = job_position_data['postedAt']
-    # updatedAt = job_position_data['updatedAt']
     location = job_position_data['location']
     desired_skills = job_position_data['desired_skills']
     targeted_majors = job_position_data['targeted_majors']
