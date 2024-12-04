@@ -30,6 +30,6 @@ with ui.element("div", className="flex flex-row justify-center items-center", ke
             st.switch_page('pages/See_Reviews.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_5"):
         if ui.button(text="Update Application Statuses", key="5", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/Application_Status.py')
+            st.switch_page('pages/Manage_Job_Applications.py')
   
 
