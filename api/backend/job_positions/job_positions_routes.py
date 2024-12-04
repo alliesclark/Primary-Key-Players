@@ -285,6 +285,7 @@ def add_job_position():
     # updatedAt = job_position_data['updatedAt']
     desired_skills = job_position_data['desired_skills']
     targeted_majors = job_position_data['targeted_majors']
+    location = job_position_data['location']
     company_id = job_position_data['company_id']
 
     # Constructing the query
@@ -297,9 +298,9 @@ def add_job_position():
     # current_app.logger.info(query)
     query = f'''
         INSERT INTO job_position (title, description, still_accepting, num_applicants,
-                                    desired_skills, targeted_majors, company_id)
+                                    desired_skills, targeted_majors, location, company_id)
         VALUES ('{title}', '{description}', {still_accepting}, {num_applicants},
-                    '{desired_skills}', '{targeted_majors}', '{company_id}')
+                    '{desired_skills}', '{targeted_majors}', '{location}', '{company_id}')
     '''
     current_app.logger.info(query)
 

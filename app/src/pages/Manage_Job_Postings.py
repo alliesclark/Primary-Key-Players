@@ -15,7 +15,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 
 addBtn = ui.button("Add Job Posting", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"add_job")
 if addBtn:
-    st.switch_page('pages/Add_Student.py')
+    st.switch_page('pages/Add_Job.py')
 
 data = {} 
 try:
