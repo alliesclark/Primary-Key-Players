@@ -18,7 +18,7 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
 with ui.element("div", className="flex flex-row justify-center items-center", key="winston_buttons"):
     with ui.element("div", className="flex flex-col m-2", key="damian_button_1"):
         if ui.button(text="Manage Job Postings", key="1", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/View_Recruiters.py')
+            st.switch_page('pages/Manage_Job_Postings.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_2"):
         if ui.button(text="Search Students", key="2", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Search_Students.py')
