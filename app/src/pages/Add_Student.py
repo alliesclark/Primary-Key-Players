@@ -12,13 +12,12 @@ logger = logging.getLogger(__name__)
 SideBarLinks(show_home=True)
 
 
-# Intro section for the review posting page
+# Intro section for the add student page
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="add_student_card"):
     ui.element("h2", children=["Add Student Information"], className="text-2xl font-bold text-gray-800", key="add_student_title")
     ui.element("div", children=["\n\n"], key="add_student_divider")
 
-# Form to post a new review
-st.header("Add a New Student")
+# Form to add a new student
 name = st.text_input("Name:")
 email = st.text_input("Email:")
 gpa = st.text_input("GPA:")
