@@ -81,7 +81,7 @@ def JobPostingCard(job):
         updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_job_{job['id']}")
         if updateBtn:
             st.session_state['updating_job_id'] = job['id']
-            st.switch_page('pages/Update_Student.py')
+            st.switch_page('pages/Update_Job_Posting.py')
 
 
     with col2:

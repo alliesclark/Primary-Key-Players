@@ -277,25 +277,13 @@ def add_job_position():
     # Extracting the variables
     title = job_position_data['title']
     description = job_position_data['description']
-    # still_accepting = job_position_data['still_accepting']
     still_accepting = 1
-    # num_applicants = job_position_data['num_applicants']
     num_applicants = 0
-    # postedAt = job_position_data['postedAt']
-    # updatedAt = job_position_data['updatedAt']
     desired_skills = job_position_data['desired_skills']
     targeted_majors = job_position_data['targeted_majors']
     location = job_position_data['location']
     company_id = job_position_data['company_id']
 
-    # Constructing the query
-    # query = f'''
-    #     INSERT INTO job_position (title, description, still_accepting, num_applicants, postedAt, updatedAt,
-    #                                 desired_skills, targeted_majors, company_id)
-    #     VALUES ('{title}', '{description}', {still_accepting}, {num_applicants}, {postedAt}, {updatedAt},
-    #                 '{desired_skills}', '{targeted_majors}', '{company_id}')
-    # '''
-    # current_app.logger.info(query)
     query = f'''
         INSERT INTO job_position (title, description, still_accepting, num_applicants,
                                     desired_skills, targeted_majors, location, company_id)
@@ -315,31 +303,30 @@ def add_job_position():
 
 #------------------------------------------------------------
 # Update a job position in the database
-@job_position.route('/job-position', methods=['PUT'])
-def update_job_position():
+@job_position.route('/job-position/<job_id>', methods=['PUT'])
+def update_job_position(job_id):
     # Collecting data from the request object
     job_position_data = request.json
     current_app.logger.info(job_position_data)
 
     # Extracting the variables
-    id = job_position_data['id']
     title = job_position_data['title']
     description = job_position_data['description']
     still_accepting = job_position_data['still_accepting']
     num_applicants = job_position_data['num_applicants']
-    postedAt = job_position_data['postedAt']
-    updatedAt = job_position_data['updatedAt']
+    # postedAt = job_position_data['postedAt']
+    # updatedAt = job_position_data['updatedAt']
+    location = job_position_data['location']
     desired_skills = job_position_data['desired_skills']
     targeted_majors = job_position_data['targeted_majors']
-    company_id = job_position_data['company_id']
 
     # Constructing the query
     query = f'''
         UPDATE job_position
         SET title = '{title}', description = '{description}', still_accepting = '{still_accepting}', 
-                    num_applicants = '{num_applicants}', postedAt = '{postedAt}', updatedAt = '{updatedAt}',
-                    desired_skills = '{desired_skills}', targeted_majors = '{targeted_majors}', company_id = '{company_id}'
-        WHERE id = {id}
+                    num_applicants = '{num_applicants}', location = '{location}',
+                    desired_skills = '{desired_skills}', targeted_majors = '{targeted_majors}'
+        WHERE id = {str(job_id)}
     '''
     current_app.logger.info(query)
 

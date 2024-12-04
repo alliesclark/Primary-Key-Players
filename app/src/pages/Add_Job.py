@@ -69,4 +69,4 @@ if saveBtn:
     if title and description and desired_skills and targeted_majors and location and company_id:
         addJob(title, description, desired_skills, location, targeted_majors, company_id)
     else:
-        st.error("Please fill in all the fields to add this job postingß.")
+        st.error("Please fill in all the fields to add this job posting.")
