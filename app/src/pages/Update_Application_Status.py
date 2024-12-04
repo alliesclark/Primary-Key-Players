@@ -55,15 +55,24 @@ def updateStatus(application_id, updated_data):
 
 #Displays application information and allows user to update status
 def UpdateAppStatusCard(application):
-    with ui.element("p", children=[f"Student Name: {application['student_name']}"], className="text-gray-600", key=f"app_desc_{application['id']}"):
+    with ui.element("div", key=f"app_card_{application['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
+         ui.element("p", children=[f"Student Name: {application['student_name']}"], className="text-gray-600", key=f"app_desc_{application['id']}")
          ui.element("p", children=[f"Job Title: {application['job_title']}"], className="text-gray-600", key=f"app_desc_{application['id']}")
          ui.element("p", children=[f"Company: {application['company_name']}"], className="text-gray-600", key=f"app_desc_{application['id']}")
          ui.element("p", children=[f"Applied At: {application['applied_at']}"], className="text-gray-600", key=f"app_desc_{application['id']}")
-         updated_status = st.text_input(label="Status(Accepting, Pending, Rejected):", value=application['status'])
-        #  status_options = ['Accepted', 'Pending', 'Rejected']
-        #  st.write("Update Status:\n")
-        #  updated_status = ui.select(options=status_options, label='Select status', key=f"status_{application['id']}")
-
+    status_options = ['Accepted', 'Pending', 'Rejected']
+    
+    # Sort status options to put previous status at the top
+    if application['status'] == 'Accepted':
+        status_options = ['Accepted', 'Pending', 'Rejected']
+    if application['status'] == 'Pending':
+        status_options = ['Pending', 'Accepted', 'Rejected']
+    if application['status'] == 'Rejected':
+        status_options = ['Rejected', 'Accepted', 'Pending']
+    
+    st.write("Select application status:\n")
+    updated_status = ui.select(options=status_options, label="Select status:", key="status_select")
+ 
     saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_status_{application['id']}")
     #Updates status if save button is clicked and then redirects back to previous page
     if saveBtn:
@@ -76,7 +85,7 @@ def UpdateAppStatusCard(application):
         try:
             updateStatus(application['id'], updated_data)
             st.success("Application status updated successfully!")
-            st.switch_page('pages/Application_Status.py')
+            st.switch_page('pages/Manage_Job_Applications.py')
         except Exception as e:
             st.error(f"Error updating application status: {str(e)}")
 

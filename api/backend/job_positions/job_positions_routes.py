@@ -146,22 +146,24 @@ def get_jobs_by_major (major_id):
 
 # ------------------------------------------------------------
 # Get contact information about jobs that are within similar companies
-@job_position.route('/job-position/similar-companies', methods=['GET'])
-def get_similar_jobs ():
+@job_position.route('/job-position/similar-companies/<industry_id>', methods=['GET'])
+def get_similar_jobs (industry_id):
 
-    query = f'''SELECT j.id,
-                       j.title, 
-                       j.description, 
-                       j.still_accepting, 
-                       j.num_applicants,
-                       j.postedAt,
-                       j.updatedAt,
-                       j.desired_skills,
-                       j.targeted_majors,
-                       j.company_id 
+    query = f'''SELECT j.id AS id,
+                       j.title AS title, 
+                       j.description AS description, 
+                       j.still_accepting AS still_accepting, 
+                       j.num_applicants AS num_applicants,
+                       j.location AS location,
+                       j.postedAt AS postedAt,
+                       j.updatedAt AS updatedAt,
+                       j.desired_skills AS desired_skills,
+                       j.targeted_majors AS targeted_majors,
+                       j.company_id AS company_id,
+                       c.name AS company_name
                 FROM job_position j JOIN company c ON j.company_id = c.id
                 JOIN industry i ON c.industry = i.id
-                GROUP BY j.company_id
+                WHERE i.id = {str(industry_id)}
     '''
     
 
@@ -210,7 +212,7 @@ def get_company_jobs (company_id):
     # The output will appear in the Docker logs output
     # This line has nothing to do with actually executing the query...
     # It is only for debugging purposes.
-    current_app.logger.info(f'GET /job-position/similar-companies query={query}')
+    current_app.logger.info(f'GET /job-position/company/<company_id> query={query}')
 
     # get the database connection, execute the query, and
     # fetch the results as a Python Dictionary
@@ -220,7 +222,7 @@ def get_company_jobs (company_id):
     
     # Another example of logging for debugging purposes.
     # You can see if the data you're getting back is what you expect.
-    current_app.logger.info(f'GET /job-position/similar-companies Result of query = {theData}')
+    current_app.logger.info(f'GET /job-position/company/<company_id> Result of query = {theData}')
     
     response = make_response(jsonify(theData))
     response.status_code = 200

@@ -104,13 +104,13 @@ def get_job_applications_by_student(student_id):
 def get_job_applications_by_company(company_id):
     
     query = f'''SELECT a.id, 
-                    a.applicant_id, 
-                    a.job_position_id,
-                    a.status,
-                    a.applied_at,
-                    s.name as student_name,
-                    j.title as job_title,
-                    c.name as company_name
+                    a.applicant_id AS applicant_id, 
+                    a.job_position_id AS job_position_id,
+                    a.status AS status,
+                    a.applied_at AS applied_at,
+                    s.name AS student_name,
+                    j.title AS job_title,
+                    c.name AS company_name
                 FROM application a
                 JOIN student s ON a.applicant_id = s.id
                 JOIN job_position j ON a.job_position_id = j.id
@@ -164,7 +164,7 @@ def update_job_application(application_id):
 
     # Constructing the query
     query = f'''
-        UPDATE job_position
+        UPDATE application
         SET applicant_id = '{applicant_id}', job_position_id = '{job_position_id}', status = '{status}'
         WHERE id = {application_id}
     '''

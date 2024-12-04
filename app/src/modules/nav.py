@@ -54,7 +54,21 @@ def ViewJobsAsSenior():
 
 ## ------------------------ Damian Tabs (Recruiter) ------------------------
 
+def ManageJobPostings():
+    st.sidebar.page_link("pages/Manage_Job_Postings.py", label="Manage Job Postings", icon="📝")
 
+def SearchStudents():
+    st.sidebar.page_link("pages/Search_Students.py", label="Search Students", icon="🔍")
+
+def ViewSimilarJobs():
+    st.sidebar.page_link("pages/View_Similar_Jobs.py", label="View Similar Job Postings", icon="👀")
+
+def ViewReviewsAsRecruiter():
+    st.sidebar.page_link("pages/See_Reviews.py", label="See Reviews", icon="👀")
+
+def ManageJobApps():
+    st.sidebar.page_link("pages/Manage_Job_Applications.py", label="Manage Job Applications", icon="📊")
+    
 ## ------------------------ Winston Tabs (Co-op Advisor) ------------------------
 
 def ViewRecruiters():
@@ -108,7 +122,11 @@ def SideBarLinks(show_home=False):
 
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state["role"] == "recruiter":
-            ViewJobs()
+            ManageJobPostings()
+            SearchStudents()
+            ViewSimilarJobs()
+            ViewReviewsAsRecruiter()
+            ManageJobApps()
             
         if st.session_state["role"] == "advisor":
             ViewJobsAsAdvisor()
