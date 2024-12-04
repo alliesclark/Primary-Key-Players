@@ -13,6 +13,10 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("div", children=["\n\n"], key="view_student_profiles_divider")
     ui.element("p", children=["View, add, update, and delete student profiles."], className="text-gray-600")
 
+addBtn = ui.button("Add Student", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"add_student")
+if addBtn:
+    st.switch_page('pages/Add_Student.py')
+
 data = {} 
 try:
     data = requests.get('http://api:4000/s/students').json()

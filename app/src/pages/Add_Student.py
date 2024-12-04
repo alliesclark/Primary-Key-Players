@@ -13,59 +13,61 @@ SideBarLinks(show_home=True)
 
 
 # Intro section for the review posting page
-with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="post_review_card"):
-    ui.element("h2", children=["Post a Question"], className="text-2xl font-bold text-gray-800", key="post_review_title")
-    ui.element("div", children=["\n\n"], key="post_review_divider")
+with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="add_student_card"):
+    ui.element("h2", children=["Add Student Information"], className="text-2xl font-bold text-gray-800", key="add_student_title")
+    ui.element("div", children=["\n\n"], key="add_student_divider")
 
 # Form to post a new review
-st.header("Post a New Review")
-rating = st.number_input("Rating (1-5):", min_value=1, max_value=5, step=1)
-description = st.text_area("Description:", max_chars=500)
-student_name = st.text_input("Your Name (Student):")
-student_id = st.text_input("Your Student ID:")
-job_position = st.text_input("Job Position (e.g., Software Engineer):")
+st.header("Add a New Student")
+name = st.text_input("Name:")
+email = st.text_input("Email:")
+gpa = st.text_input("GPA:")
+major_id = st.text_input("Major ID:")
+grad_year = st.text_input("Graduation Year:")
+advised_by = st.text_input("Advisor ID:")
 
-saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
+saveBtn = ui.button("Submit Student Information", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_student_btn")
 
 # Function to post the review to the server
-def postReview(rating, description, student_name, student_id, job_position):
+def addStudent(name, email, gpa, major_id, grad_year, advised_by):
     try:
         # Review data to be sent to the API
-        review_data = {
-            "rating": rating,
-            "review": description,
-            "student_name": student_name,
-            "student_id": student_id,
-            "job_position": job_position
+        student_data = {
+            "name": name,
+            "email": email,
+            "gpa": gpa,
+            "major_id": major_id,
+            "grad_year": grad_year,
+            "advised_by": advised_by,
         }
 
-        response = requests.post('http://api:4000/s/reviews', json=review_data)
+        response = requests.post('http://api:4000/s/students', json=student_data)
 
         if response.status_code == 200:
-            logger.info("Review posted successfully.")
-            st.success("Review posted successfully!")
-            st.switch_page('pages/See_Reviews.py')  # Optional: Navigate to the reviews page after posting
+            logger.info("Student added successfully.")
+            st.success("Student added successfully!")
+            st.switch_page('pages/Student_Profiles.py')  # Optional: Navigate to the students page after adding
         else:
             ui.element(
                 "p",
                 children=[
-                    f"Failed to post review: {response.json().get('message', 'Unknown error')}"
+                    f"Failed to add student: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
-                key="post_review_error"
+                key="add_student_error"
             )
     except Exception as e:
-        logger.error(f"Error posting review: {str(e)}")
+        logger.error(f"Error adding student: {str(e)}")
         ui.element(
             "p",
-            children=["Failed to post review: Unknown error"],
+            children=["Failed to add student: Unknown error"],
             className="text-red-500",
-            key="post_review_error"
+            key="add_student_error"
         )
 
 # If the save button is pressed, submit the review
 if saveBtn:
-    if rating and description and student_name and student_id and job_position:
-        postReview(rating, description, student_name, student_id, job_position)
+    if name and email and gpa and major_id and grad_year and advised_by:
+        addStudent(name, email, gpa, major_id, grad_year, advised_by)
     else:
-        st.error("Please fill in all the fields to submit your review.")
+        st.error("Please fill in all the fields to add this student.")
