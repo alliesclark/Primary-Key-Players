@@ -1,7 +1,6 @@
-########################################################
-# Sample customers blueprint of endpoints
-# Remove this file if you are not using it in your project
-########################################################
+#################################
+# Interview Questions Blueprint #
+#################################
 
 from flask import Blueprint
 from flask import request
@@ -62,7 +61,7 @@ def post_interview_question():
     author_id = question_data['author_id']
 
     query = f'''
-        INSERT INTO interview_questions (question, job_position_id, author_id)
+        INSERT INTO interview_question (question, job_position_id, author_id)
         VALUES ('{question}', '{job_position_id}', '{author_id}')
     '''
     current_app.logger.info(query)

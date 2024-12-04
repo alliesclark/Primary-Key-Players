@@ -40,13 +40,13 @@ saveBtn = ui.button("Submit Question", className="bg-red-400 text-white font-bol
 def postQuestion(question, job_position_id, author_id):
     try:
         # Review data to be sent to the API
-        review_data = {
+        question_data = {
             "question": question,
             "job_position_id": job_position_id,
             "author_id": author_id
         }
 
-        response = requests.post('http://api:4000/i/interview_questions', json=review_data)
+        response = requests.post('http://api:4000/i/interview_questions', json=question_data)
 
         if response.status_code == 200:
             logger.info("Question posted successfully.")
