@@ -100,7 +100,7 @@ def get_job_applications_by_student(student_id):
 
 #------------------------------------------------------------
 # Get all the applications for a specific company
-@job_applications.route('/applications/<company_id>', methods=['GET'])
+@job_applications.route('/applications/company/<company_id>', methods=['GET'])
 def get_job_applications_by_company(company_id):
     
     query = f'''SELECT a.id, 
