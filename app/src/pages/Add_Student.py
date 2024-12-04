@@ -17,13 +17,39 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("h2", children=["Add Student Information"], className="text-2xl font-bold text-gray-800", key="add_student_title")
     ui.element("div", children=["\n\n"], key="add_student_divider")
 
+#Creat list of majors for dropdown menu
+majors = []
+try:
+    majors = requests.get('http://api:4000/m/majors').json()
+except Exception as e:
+    logger.error(f"Error retrieving company data: {e}")
+    majors = []
+
+major_options = {major['name']: major["id"] for major in majors}
+
+#Create list of advisors for dropdown menu
+advisors = []
+try:
+    advisors = requests.get('http://api:4000/ad/advisors').json()
+        
+except Exception as e:
+    logger.error(f"Error retrieving company data: {e}")
+    advisors = []
+
+advisor_options = {advisor['name']: advisor['id'] for advisor in advisors}
+
 # Form to add a new student
 name = st.text_input("Name:")
 email = st.text_input("Email:")
 gpa = st.text_input("GPA:")
-major_id = st.text_input("Major ID:")
+st.write("Select major:\n")
+desired_major = ui.select(options=list(major_options.keys()), label="Select major:", key="major_select")
+major_id = major_options.get(desired_major)
+# major_id = st.text_input("Major ID:")
 grad_year = st.text_input("Graduation Year:")
-advised_by = st.text_input("Advisor ID:")
+st.write("Select advisor:\n")
+desired_advisor = ui.select(options=list(advisor_options.keys()), label="Select advisor:", key="advisor_select")
+advised_by = advisor_options.get(desired_advisor)
 
 saveBtn = ui.button("Submit Student Information", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_student_btn")
 
