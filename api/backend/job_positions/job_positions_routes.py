@@ -339,34 +339,7 @@ def update_job_position(job_id):
     return response
     
 
-#------------------------------------------------------------
-# # Delete a specific job position
-# @job_position.route('/job-position', methods=['DELETE'])
-# def delete_job_position():
-#     # Collecting data from the request object
-#     job_position_data = request.json
-#     current_app.logger.info(job_position_data)
-
-#     # Extracting the variables
-#     job_id = job_position_data['id']
-
-#     # Constructing the query
-#     query = f'''
-#         DELETE FROM job_position
-#         WHERE id = {job_id}
-#     '''
-#     current_app.logger.info(query)
-
-#     # Executing and committing the delete statement
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query)
-#     db.get_db().commit()
-
-#     response = make_response("Successfully deleted job position")
-#     response.status_code = 200
-#     return response
-
-# Delete a student from the database
+# Delete a specific job position from the database
 @job_position.route('/job-position/<job_id>', methods=['DELETE'])
 def delete_job_position(job_id):
     
