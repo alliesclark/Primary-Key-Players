@@ -65,6 +65,7 @@ def UpdateAppStatusCard(application):
     
     if saveBtn:
         updated_data = {
+            "id": application['id'],
             "applicant_id": application['applicant_id'],
             "job_position_id": application['job_position_id'],
             "status": updated_status
