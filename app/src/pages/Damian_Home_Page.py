@@ -17,19 +17,19 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     
 with ui.element("div", className="flex flex-row justify-center items-center", key="winston_buttons"):
     with ui.element("div", className="flex flex-col m-2", key="damian_button_1"):
-        if ui.button(text="Manage Job Postings", key="1", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="Manage Job Postings", key="1", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Manage_Job_Postings.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_2"):
-        if ui.button(text="Search Students", key="2", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="Search Students", key="2", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Search_Students.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_3"):
-        if ui.button(text="See Job Postings", key="3", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="See Job Postings", key="3", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/View_Jobs.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_4"):
-        if ui.button(text="See Job Reviews", key="4", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="See Job Reviews", key="4", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/See_Reviews.py')
     with ui.element("div", className="flex flex-col m-2", key="damian_button_5"):
-        if ui.button(text="Update Application Statuses", key="5", className="bg-blue-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="Update Application Statuses", key="5", className="bg-orange-300 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Application_Status.py')
   
 
