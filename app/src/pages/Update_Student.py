@@ -8,11 +8,13 @@ from modules.nav import SideBarLinks
 
 SideBarLinks(show_home=True)
 
+#Intro section for update student page
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="edit_student_card"):
     ui.element("h2", children=["Manage Student Profile"], className="text-2xl font-bold text-gray-800", key="edit_students_title")
     ui.element("div", children=["\n\n"], key="edit_student_profiles_divider")
     ui.element("p", children=["Edit student profile."], className="text-gray-600")
 
+#Retrieve the information of the specific student
 data = {} 
 try:
     data = requests.get("http://api:4000/s/students/" + str(st.session_state['updating_student_id'])).json()
@@ -21,7 +23,7 @@ try:
 except:
     logger.error("Error retrieving data from the API")
     
-
+#Update the student's information in the database
 def updateStudent(student_id, updated_data):
     try:
         response = requests.put(
@@ -51,13 +53,14 @@ def updateStudent(student_id, updated_data):
             key=f"update_student_error_{student_id}"
         )
 
+#Display student's information as editable fields
 def UpdateProfileCard(student):
     st.header("Edit Student Profile")
     updated_name = st.text_input(label="Name:", value=student['name'])
     updated_email = st.text_input(label="Email:", value=student['email'])
     updated_grad_year = st.number_input(label="Graduation Year:", value=student['grad_year'], step=1)
     updated_gpa = st.text_input(label="GPA:", value=student['gpa'])
-    
+    #Make dropdown with possible majors
     majors = []
     try:
         majors = requests.get('http://api:4000/m/majors').json()
@@ -69,7 +72,7 @@ def UpdateProfileCard(student):
     st.write("Select major:\n")
     desired_major = ui.select(options=list(major_options.keys()), label="Select major:", key="major_select")
     updated_major_id = major_options.get(desired_major)
-    
+    #Make dropdown with possible advisors
     advisors = []
     try:
         advisors = requests.get('http://api:4000/ad/advisors').json()
@@ -84,7 +87,7 @@ def UpdateProfileCard(student):
     updated_advisor_id = advisor_options.get(desired_advisor)
 
     saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_student_{student['student_id']}")
-    
+    #If save button is clicked, student information is updated
     if saveBtn:
         updated_data = {
             "name": updated_name,
@@ -101,6 +104,7 @@ def UpdateProfileCard(student):
         except Exception as e:
             st.error(f"Error updating profile: {str(e)}")
 
+#Displays student information
 if data:
     UpdateProfileCard(data[0])
     

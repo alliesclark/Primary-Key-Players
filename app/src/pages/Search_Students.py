@@ -8,11 +8,13 @@ from modules.nav import SideBarLinks
 
 SideBarLinks(show_home=True)
 
+#Intro section for search students page
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_student_card"):
     ui.element("h2", children=["Student Profiles"], className="text-2xl font-bold text-gray-800", key="view_students_title")
     ui.element("div", children=["\n\n"], key="view_students_divider")
     ui.element("p", children=["Search student profiles by major."], className="text-gray-600")
 
+#Retrieves list of majors to make dropdown for recruiters to filter students by major
 majors = []
 try:
     majors = requests.get('http://api:4000/m/majors').json()
@@ -24,6 +26,7 @@ major_options = {major['name']: major["id"] for major in majors}
 desired_major = ui.select(options=list(major_options.keys()), label="Select a major:")
 desired_major_id = major_options.get(desired_major)
 
+#Retrieves students with the selected major
 students_data = []
 if desired_major_id:
     try:
@@ -34,6 +37,7 @@ if desired_major_id:
         logger.error(f"Error retrieving students data: {e}")
         students_data = []
 
+#Displays student information (name, email, gpa, major, grad yr, advisor, and past job)
 def StudentCard(student):
     with ui.element("div", key=f"student_card_{student['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
         ui.element("h3", children=[f"Name: {student['name']}"], className="text-xl font-bold text-gray-800")
@@ -47,7 +51,7 @@ def StudentCard(student):
         else:
             ui.element("p", children=[f"Past Job: N/A"], className="text-gray-600")
 
-
+#If students found with the selected major, display those students' information
 if students_data and isinstance(students_data, list):
     if students_data:
         for student in students_data:

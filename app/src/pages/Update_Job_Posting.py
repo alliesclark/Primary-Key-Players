@@ -8,11 +8,13 @@ from modules.nav import SideBarLinks
 
 SideBarLinks(show_home=True)
 
+#Intro section for update job posting page
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="edit_job_card"):
     ui.element("h2", children=["Manage Job Posting"], className="text-2xl font-bold text-gray-800", key="edit_job_title")
     ui.element("div", children=["\n\n"], key="edit_job_postings_divider")
     ui.element("p", children=["Edit job information."], className="text-gray-600")
 
+#Retrieve information for the specific job posting
 data = {} 
 try:
     data = requests.get("http://api:4000/j/job-position/" + str(st.session_state['updating_job_id'])).json()
@@ -21,7 +23,7 @@ try:
 except:
     logger.error("Error retrieving data from the API")
     
-
+#Update job posting information in the database
 def updateJob(job_id, updated_data):
     try:
         response = requests.put(
@@ -51,6 +53,7 @@ def updateJob(job_id, updated_data):
             key=f"update_job_error_{job_id}"
         )
 
+#Display job posting informatioon as editable fields
 def UpdateJobCard(job):
     updated_title = st.text_input(label="Title:", value=job['title'])
     updated_description = st.text_area(label="Description:", value=job['description'], max_chars=500)
@@ -68,7 +71,7 @@ def UpdateJobCard(job):
         updated_still_accepting = 0
 
     saveBtn = ui.button("Save", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"save_job_{job['id']}")
-    
+    #If click save button, update job posting to edited information
     if saveBtn:
         updated_data = {
             "title": updated_title,
@@ -86,6 +89,7 @@ def UpdateJobCard(job):
         except Exception as e:
             st.error(f"Error updating profile: {str(e)}")
 
+#Display the job postings information
 if data:
     UpdateJobCard(data[0])
     

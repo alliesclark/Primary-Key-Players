@@ -27,10 +27,10 @@ targeted_majors = st.text_input("Targeted Majors:")
 
 saveBtn = ui.button("Submit Job Posting", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_job_btn")
 
-# Function to post the review to the server
+# Function to post the job to the server
 def addJob(title, description, desired_skills, location, targeted_majors, company_id):
     try:
-        # Review data to be sent to the API
+        # Job posting data to be sent to the API
         job_data = {
             "title": title,
             "description": description,
@@ -64,7 +64,7 @@ def addJob(title, description, desired_skills, location, targeted_majors, compan
             key="add_job_error"
         )
 
-# If the save button is pressed, submit the review
+# If the save button is pressed, submit the job posting
 if saveBtn:
     if title and description and desired_skills and targeted_majors and location and company_id:
         addJob(title, description, desired_skills, location, targeted_majors, company_id)

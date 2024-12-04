@@ -27,10 +27,10 @@ advised_by = st.text_input("Advisor ID:")
 
 saveBtn = ui.button("Submit Student Information", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_student_btn")
 
-# Function to post the review to the server
+# Function to post the student to the server
 def addStudent(name, email, gpa, major_id, grad_year, advised_by):
     try:
-        # Review data to be sent to the API
+        # Student data to be sent to the API
         student_data = {
             "name": name,
             "email": email,
@@ -64,7 +64,7 @@ def addStudent(name, email, gpa, major_id, grad_year, advised_by):
             key="add_student_error"
         )
 
-# If the save button is pressed, submit the review
+# If the save button is pressed, submit the student information
 if saveBtn:
     if name and email and gpa and major_id and grad_year and advised_by:
         addStudent(name, email, gpa, major_id, grad_year, advised_by)

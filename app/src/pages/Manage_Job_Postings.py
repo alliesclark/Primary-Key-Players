@@ -8,15 +8,18 @@ from modules.nav import SideBarLinks
 
 SideBarLinks(show_home=True)
 
+#Intro section for manage job postings page
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_student_card"):
     ui.element("h2", children=["Manage Job Postings"], className="text-2xl font-bold text-gray-800", key="manage_jobs_title")
     ui.element("div", children=["\n\n"], key="manage_jobs_divider")
     ui.element("p", children=["View, add, update, and delete job postings."], className="text-gray-600")
 
+#Takes user to add job posting page
 addBtn = ui.button("Add Job Posting", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"add_job")
 if addBtn:
     st.switch_page('pages/Add_Job.py')
 
+#Retrieve job postings from the company the recruiter works for (hard-coded for damian)
 data = {} 
 try:
     data = requests.get('http://api:4000/j/job-position/company/1').json()
@@ -24,7 +27,8 @@ try:
 except:
     logger.error("Error retrieving data from the API")
     data = []  
-    
+
+#Remove job posting from database   
 def deleteJobPosting(job_id, job_title):
     try:
         response = requests.delete(f'http://api:4000/j/job-position/{job_id}')
@@ -56,7 +60,7 @@ def deleteJobPosting(job_id, job_title):
             key=f"delete_student_error_{student_id}"
         )
 
-
+#Displays job posting information and allows user to update or delete the posting
 def JobPostingCard(job):
     with ui.element("div", key=f"job_card_{job['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
          ui.element("h3", children=[f"{job['title']}"], className="text-xl font-bold text-gray-800", key=f"job_title_{job['id']}")
@@ -77,20 +81,21 @@ def JobPostingCard(job):
 
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
+    #Takes user to update job posting page for the selected job posting
     with col1:
         updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_job_{job['id']}")
         if updateBtn:
             st.session_state['updating_job_id'] = job['id']
             st.switch_page('pages/Update_Job_Posting.py')
 
-
+    #Deletes job posting from database
     with col2:
         deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_job_{job['id']}")
         if deleteBtn:
             deleteJobPosting(job['id'], job['title'])
            
 
-
+#Displays job postings if they are found for the recruiter's company
 if data and isinstance(data, list):
     if data:
         for job in data:
