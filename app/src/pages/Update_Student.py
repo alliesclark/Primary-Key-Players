@@ -68,7 +68,17 @@ def UpdateProfileCard(student):
         logger.error(f"Error retrieving company data: {e}")
         majors = []
 
+    current_major_id = student.get('major_id')
     major_options = {major['name']: major["id"] for major in majors}
+    
+    if current_major_id:
+        major_options = dict(
+            sorted(
+                major_options.items(),
+                key=lambda item: item[1] != current_major_id 
+            )
+        )
+        
     st.write("Select major:\n")
     desired_major = ui.select(options=list(major_options.keys()), label="Select major:", key="major_select")
     updated_major_id = major_options.get(desired_major)
@@ -81,7 +91,17 @@ def UpdateProfileCard(student):
         logger.error(f"Error retrieving company data: {e}")
         advisors = []
 
+    current_advisor_id = student.get('advised_by')
     advisor_options = {advisor['name']: advisor['id'] for advisor in advisors}
+    
+    if current_advisor_id:
+        advisor_options = dict(
+            sorted(
+                advisor_options.items(),
+                key=lambda item: item[1] != current_advisor_id 
+            )
+        )
+
     st.write("Select advisor:\n")
     desired_advisor = ui.select(options=list(advisor_options.keys()), label="Select advisor:", key="advisor_select")
     updated_advisor_id = advisor_options.get(desired_advisor)
