@@ -9,43 +9,43 @@ from modules.nav import SideBarLinks
 SideBarLinks(show_home=True)
 
 with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="view_student_card"):
-    ui.element("h2", children=["Manage Students"], className="text-2xl font-bold text-gray-800", key="view_students_title")
-    ui.element("div", children=["\n\n"], key="view_student_profiles_divider")
-    ui.element("p", children=["View, add, update, and delete student profiles."], className="text-gray-600")
+    ui.element("h2", children=["Manage Job Postings"], className="text-2xl font-bold text-gray-800", key="manage_jobs_title")
+    ui.element("div", children=["\n\n"], key="manage_jobs_divider")
+    ui.element("p", children=["View, add, update, and delete job postings."], className="text-gray-600")
 
-addBtn = ui.button("Add Student", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"add_student")
+addBtn = ui.button("Add Job Posting", className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"add_job")
 if addBtn:
     st.switch_page('pages/Add_Student.py')
 
 data = {} 
 try:
-    data = requests.get('http://api:4000/s/students').json()
-    ui.element("h3", children=["Students"], className="text-xl font-bold text-gray-800")  
+    data = requests.get('http://api:4000/j/job-position/company/1').json()
+    ui.element("h3", children=["Jobs"], className="text-xl font-bold text-gray-800")  
 except:
     logger.error("Error retrieving data from the API")
     data = []  
     
-def deleteStudent(student_id, student_name):
+def deleteStudent(job_id, job_title):
     try:
-        response = requests.delete(f'http://api:4000/s/students/{student_id}')
+        response = requests.delete(f'http://api:4000/j/job-position/{job_id}')
         if response.status_code == 200:
-            logger.info(f"Student deleted: {student_id}")
+            logger.info(f"Job Posting deleted: {job_id}")
             ui.alert_dialog(
             show=True, 
-            title="Deleted Student", 
-            description=f"The student profile under the name {student_name} has been deleted.", 
+            title="Deleted Job Posting", 
+            description=f"The job posting under the title {job_title} has been deleted.", 
             confirm_label="OK", 
             cancel_label="Cancel", 
-            key=f"delete_dialog_{student_id}"
+            key=f"delete_dialog_{job_id}"
             )
         else:
             ui.element(
                 "p",
                 children=[
-                    f"Failed to delete student: {response.json().get('message', 'Unknown error')}"
+                    f"Failed to delete job posting: {response.json().get('message', 'Unknown error')}"
                 ],
                 className="text-red-500",
-                key=f"delete_student_error_{student_id}"
+                key=f"delete_job_error_{job_id}"
             )
     except Exception as e:
         logger.error(f"Error deleting student {student_id}: {str(e)}")
