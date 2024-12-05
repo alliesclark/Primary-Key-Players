@@ -68,7 +68,6 @@ saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold 
 # Function to post the review to the server
 def postReview(rating, description, student_name, student_id, job_position_id, contact_email):
     try:
-        # Review data to be sent to the API
         review_data = {
             "rating": rating,
             "review": description,
@@ -83,7 +82,7 @@ def postReview(rating, description, student_name, student_id, job_position_id, c
         if response.status_code == 200:
             logger.info("Review posted successfully.")
             st.success("Review posted successfully!")
-            st.switch_page('pages/See_Reviews.py')  # Optional: Navigate to the reviews page after posting
+            st.switch_page('pages/See_Reviews.py') 
         else:
             ui.element(
                 "p",
@@ -102,7 +101,6 @@ def postReview(rating, description, student_name, student_id, job_position_id, c
             key="post_review_error"
         )
 
-# If the save button is pressed, submit the review
 if saveBtn:
     if rating and description and selected_job_position_id:
         if contact_preference == "Yes" and not contact_email:

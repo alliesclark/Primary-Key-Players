@@ -31,7 +31,7 @@ with ui.element("div", className="flex flex-row justify-center items-center", ke
     with ui.element("div", className="flex flex-col m-2", key="wade_button_5"):
         if ui.button(text="View Job Positions", key="5", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/View_Jobs.py')
-    with ui.element("div", className="flex flex-col m-2", key="wade_button_6"):
-        if ui.button(text="Questions From Peers", key="6", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/View_Jobs.py')
+    # with ui.element("div", className="flex flex-col m-2", key="wade_button_6"):
+    #     if ui.button(text="Questions From Peers", key="6", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+    #         st.switch_page('pages/View_Jobs.py')
  
