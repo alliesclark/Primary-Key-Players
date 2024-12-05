@@ -1637,7 +1637,7 @@ VALUES
 INSERT INTO
     major (name, department)
 VALUES
-    ('Computer Science', '9');
+    ('Computer Engineering', '9');
 
 INSERT INTO
     major (name, department)
@@ -1697,7 +1697,7 @@ VALUES
 INSERT INTO
     major (name, department)
 VALUES
-    ('Graphic Design', '4');
+    ('Graphic Paints', '4');
 
 INSERT INTO
     major (name, department)
@@ -1732,7 +1732,7 @@ VALUES
 INSERT INTO
     major (name, department)
 VALUES
-    ('Data Science', '14');
+    ('IT', '14');
 
 INSERT INTO
     major (name, department)
@@ -1782,7 +1782,7 @@ VALUES
 INSERT INTO
     major (name, department)
 VALUES
-    ('Computer Science', '73');
+    ('Sports Science', '73');
 
 INSERT INTO
     major (name, department)
@@ -1807,7 +1807,7 @@ VALUES
 INSERT INTO
     major (name, department)
 VALUES
-    ('Mechanical Engineering', '91');
+    ('Car Engineering', '91');
 
 INSERT INTO
     major (name, department)

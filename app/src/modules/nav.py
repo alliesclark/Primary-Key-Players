@@ -129,8 +129,8 @@ def SideBarLinks(show_home=False):
             ManageJobApps()
             
         if st.session_state["role"] == "advisor":
-            ViewJobsAsAdvisor()
             ViewRecruiters()
+            ViewJobsAsAdvisor()
             ViewReviewsAsAdvisor()
             ManageStudents()
 
