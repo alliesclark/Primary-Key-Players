@@ -60,7 +60,7 @@ def deleteStudent(student_id, student_name):
             key=f"delete_student_error_{student_id}"
         )
 
-#Displays studnet information and provides update and delete buttons
+#Displays student information and provides update and delete buttons
 def StudentProfileCard(student):
     with ui.element("div", key=f"student_card_{student['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
         ui.element("h3", children=[f"Name: {student['name']}"], className="text-xl font-bold text-gray-800")

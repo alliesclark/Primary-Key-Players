@@ -14,10 +14,10 @@ with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2
     ui.element("div", children=["\n\n"], key="view_rev_divider")
     ui.element("p", children=["View, update, and delete your previous reviews."], className="text-gray-600")
 
-#Retrieves information on each student
+#Retrieves information on each review by that student (hard coded for Wade)
 data = {} 
 try:
-    data = requests.get('http://api:4000/r/reviews/student/1').json()
+    data = requests.get('http://api:4000/r/reviews/student/2').json()
     ui.element("h3", children=["Reviews"], className="text-xl font-bold text-gray-800")  
 except:
     logger.error("Error retrieving data from the API")
@@ -55,8 +55,8 @@ def deleteReview(review_id):
             key=f"delete_review_error_{review_id}"
         )
 
-#Displays studnet information and provides update and delete buttons
-def StudentProfileCard(review):
+#Displays review information and provides update and delete buttons
+def ReviewCard(review):
     with ui.element("div", key=f"review_card_{review['id']}", className="p-4 m-2 shadow-lg rounded-lg border"):
         ui.element(
             "h3",
@@ -77,7 +77,7 @@ def StudentProfileCard(review):
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
     with col1:
-        #Takes user to update student profile page
+        #Takes user to update review page
         updateBtn = ui.button("Update", className="bg-purple-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"update_review_{review['id']}")
         if updateBtn:
             st.session_state['updating_review_id'] = review['id']
@@ -85,18 +85,18 @@ def StudentProfileCard(review):
 
 
     with col2:
-        #Deletes student from database
-        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_student_{student['id']}")
+        #Deletes review from database
+        deleteBtn = ui.button("Delete", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key=f"delete_review_{review['id']}")
         if deleteBtn:
-            deleteStudent(student['id'], student['name'])
+            deleteReview(review['id'])
            
 
-#If there are students in the database, display their information
+#If there are reviews by that student in the database, display the reviews
 if data and isinstance(data, list):
     if data:
-        for student in data:
-            StudentProfileCard(student)
+        for review in data:
+            ReviewCard(review)
     else:
-        ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
+        ui.element("h3", children=["No reviews found."], className="text-xl font-bold text-gray-800")
 else:
-    ui.element("h3", children=["No students found."], className="text-xl font-bold text-gray-800")
+    ui.element("h3", children=["No reviews found."], className="text-xl font-bold text-gray-800")
