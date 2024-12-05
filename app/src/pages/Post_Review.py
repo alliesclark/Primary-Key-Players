@@ -108,6 +108,6 @@ if saveBtn:
         if contact_preference == "Yes" and not contact_email:
             st.error("Please provide your email if you want to be contacted.")
         else:
-            postReview(rating, description, 'Wade Wilson', 1, selected_job_position_id, contact_email)
+            postReview(rating, description, 'Wade Wilson', 2, selected_job_position_id, contact_email)
     else:
         st.error("Please fill in all the fields to submit your review.")

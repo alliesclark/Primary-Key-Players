@@ -154,18 +154,12 @@ def update_review():
 # ------------------------------------------------------------
 # Delete a review from the database
 @reviews.route('/reviews/<id>', methods=['DELETE'])
-def delete_review():
-    # Collecting data from the request object
-    review_data = request.json
-    current_app.logger.info(review_data)
-
-    # Extracting the variables
-    review_id = review_data['id']
+def delete_review(id):
 
     # Constructing the query
     query = f'''
         DELETE FROM review
-        WHERE id = {review_id}
+        WHERE id = {id}
     '''
     current_app.logger.info(query)
 
@@ -177,7 +171,6 @@ def delete_review():
     response = make_response("Successfully deleted review")
     response.status_code = 200
     return response
-
 
 
 #------------------------------------------------------------
@@ -215,7 +208,7 @@ def get_reviews_by_company(company_id):
 # ------------------------------------------------------------
 # Retrieve a list of reviews made by a specific student
 @reviews.route('/reviews/student/<id>', methods=['GET'])
-def get_reviews_by_student(student_id):
+def get_reviews_by_student(id):
 
     query = f'''
         SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id, s.name as student_name
@@ -223,7 +216,7 @@ def get_reviews_by_student(student_id):
         JOIN job_position jp ON r.job_position_id = jp.id
         JOIN company c ON jp.company_id = c.id
         JOIN student s ON r.student_id = s.id
-        WHERE c.id = {str(student_id)}
+        WHERE s.id = {str(id)}
     '''
     #Log query
     current_app.logger.info(f'GET /reviews/student/<id> query={query}')
