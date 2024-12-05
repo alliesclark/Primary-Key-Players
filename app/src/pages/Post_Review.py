@@ -63,34 +63,6 @@ contact_email = None
 if contact_preference == "Yes":
     contact_email = st.text_input("Add the email you would like to be contacted with:")
 
-st.write("Select which company:")
-desired_company = ui.select(
-    options=list(company_options.keys()), 
-    label="Select which company:", 
-    key="desired_company_select"
-)
-desired_company_id = company_options.get(desired_company)
-
-st.write("Job Position:")
-selected_job_title = ui.select(
-    options=list(job_position_options.keys()), 
-    label="Job Position:", 
-    key="job_position_select"
-)
-selected_job_position_id = job_position_options.get(selected_job_title)
-
-# Question: Would you like to be contacted?
-contact_preference = st.radio(
-    "Would you like to be contacted?",
-    options=["No", "Yes"],
-    key="contact_preference"
-)
-
-# Show email input field if user selects "Yes"
-contact_email = None
-if contact_preference == "Yes":
-    contact_email = st.text_input("Add the email you would like to be contacted with:")
-
 saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
 
 # Function to post the review to the server
