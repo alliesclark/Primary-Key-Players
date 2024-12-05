@@ -34,7 +34,7 @@ question = st.text_area("Question:", max_chars=500)
 selected_job_title = ui.select(options=list(job_position_options.keys()), label="Select Job Position:")
 selected_job_position_id = job_position_options.get(selected_job_title)
 
-saveBtn = ui.button("Submit Question", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
+saveBtn = ui.button("Submit Question", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_question_btn")
 
 # Function to post the review to the server
 def postQuestion(question, job_position_id, author_id):

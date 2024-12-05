@@ -66,10 +66,11 @@ def add_review():
 
     # Constructing the query
     query = f'''
-        INSERT INTO review (id, rating, review, student_id, job_position_id)
-        VALUES ('{id}', '{rating}', {review}, {student_id}, {job_position_id})
+        INSERT INTO review (rating, review, student_id, job_position_id)
+        VALUES ('{rating}', {review}, {student_id}, {job_position_id})
     '''
-    current_app.logger.info(query)
+    # current_app.logger.info(query)
+    cursor.execute(query, (rating, review, student_id, job_position_id))
 
     # Executing and committing the insert statement
     cursor = db.get_db().cursor()
