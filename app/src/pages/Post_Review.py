@@ -12,31 +12,97 @@ logger = logging.getLogger(__name__)
 SideBarLinks(show_home=True)
 
 
-# Intro section for the review posting page
-with ui.element("div", className="flex flex-col border rounded-lg shadow p-4 m-2", key="post_review_card"):
-    ui.element("h2", children=["Post a Review"], className="text-2xl font-bold text-gray-800", key="post_review_title")
-    ui.element("div", children=["\n\n"], key="post_review_divider")
-    
+job_positions = []
+try:
+    job_positions = requests.get('http://api:4000/j/job-position').json()
+except Exception as e:
+    logger.error(f"Error retrieving job positions data: {e}")
+    job_positions = []
+
+job_position_options = {job['title']: job["id"] for job in job_positions}
+
+companies = []
+try:
+    companies = requests.get('http://api:4000/c/company').json()
+except Exception as e:
+    logger.error(f"Error retrieving company data: {e}")
+    companies = []
+
+company_options = {company['name']: company["id"] for company in companies}
 
 # Form to post a new review
 st.header("Post a New Review")
 rating = st.number_input("Rating (1-5):", min_value=1, max_value=5, step=1)
 description = st.text_area("Description:", max_chars=500)
-student_name = st.text_input(f"Your Name (Student): ")
-student_id = st.text_input(f"Your Student ID: ")
-job_position = st.text_input("Job Position (e.g., Software Engineer):")
+
+st.write("Select which company:")
+desired_company = ui.select(
+    options=list(company_options.keys()), 
+    label="Select which company:", 
+    key="desired_company_select"
+)
+desired_company_id = company_options.get(desired_company)
+
+st.write("Job Position:")
+selected_job_title = ui.select(
+    options=list(job_position_options.keys()), 
+    label="Job Position:", 
+    key="job_position_select"
+)
+selected_job_position_id = job_position_options.get(selected_job_title)
+
+# Question: Would you like to be contacted?
+contact_preference = st.radio(
+    "Would you like to be contacted?",
+    options=["No", "Yes"],
+    key="contact_preference"
+)
+
+# Show email input field if user selects "Yes"
+contact_email = None
+if contact_preference == "Yes":
+    contact_email = st.text_input("Add the email you would like to be contacted with:")
+
+st.write("Select which company:")
+desired_company = ui.select(
+    options=list(company_options.keys()), 
+    label="Select which company:", 
+    key="desired_company_select"
+)
+desired_company_id = company_options.get(desired_company)
+
+st.write("Job Position:")
+selected_job_title = ui.select(
+    options=list(job_position_options.keys()), 
+    label="Job Position:", 
+    key="job_position_select"
+)
+selected_job_position_id = job_position_options.get(selected_job_title)
+
+# Question: Would you like to be contacted?
+contact_preference = st.radio(
+    "Would you like to be contacted?",
+    options=["No", "Yes"],
+    key="contact_preference"
+)
+
+# Show email input field if user selects "Yes"
+contact_email = None
+if contact_preference == "Yes":
+    contact_email = st.text_input("Add the email you would like to be contacted with:")
 
 saveBtn = ui.button("Submit Review", className="bg-red-400 text-white font-bold py-2 px-4 rounded-lg shadow", key="submit_review_btn")
 
 # Function to post the review to the server
-def postReview(rating, description, student_name, student_id, job_position):
+def postReview(rating, description, student_name, student_id, job_position_id, contact_email):
     try:
         review_data = {
             "rating": rating,
             "review": description,
             "student_name": student_name,
             "student_id": student_id,
-            "job_position": job_position
+            "job_position_id": job_position_id,
+            "contact_email": contact_email
         }
 
         response = requests.post('http://api:4000/r/reviews', json=review_data)
@@ -64,7 +130,10 @@ def postReview(rating, description, student_name, student_id, job_position):
         )
 
 if saveBtn:
-    if rating and description and student_name and student_id and job_position:
-        postReview(rating, description, student_name, student_id, job_position)
+    if rating and description and selected_job_position_id:
+        if contact_preference == "Yes" and not contact_email:
+            st.error("Please provide your email if you want to be contacted.")
+        else:
+            postReview(rating, description, 'Wade Wilson', 1, selected_job_position_id, contact_email)
     else:
         st.error("Please fill in all the fields to submit your review.")

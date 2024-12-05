@@ -1,7 +1,6 @@
-########################################################
-# Sample customers blueprint of endpoints
-# Remove this file if you are not using it in your project
-########################################################
+#################################
+# Interview Questions Blueprint #
+#################################
 
 from flask import Blueprint
 from flask import request
@@ -48,3 +47,32 @@ def get_students():
     response.status_code = 200
     # send the response back to the client
     return response
+
+# Post a new job position to the database
+@interview_questions.route('/interview_questions', methods=['POST'])
+def post_interview_question():
+    # Collecting data from the request object
+    question_data = request.json
+    current_app.logger.info(question_data)
+
+    # Extracting the variables
+    question = question_data['question']
+    job_position_id = question_data['job_position_id']
+    author_id = question_data['author_id']
+
+    query = f'''
+        INSERT INTO interview_question (question, job_position_id, author_id)
+        VALUES ('{question}', '{job_position_id}', '{author_id}')
+    '''
+    current_app.logger.info(query)
+
+    # Executing and committing the insert statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    response = make_response("Successfully added question")
+    response.status_code = 200
+    return response
+
+

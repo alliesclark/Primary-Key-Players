@@ -99,6 +99,35 @@ def get_job_applications_by_student(student_id):
     return response
 
 #------------------------------------------------------------
+# Get all the applications for a specific company
+@job_applications.route('/applications/company/<company_id>', methods=['GET'])
+def get_job_applications_by_company(company_id):
+    
+    query = f'''SELECT a.id, 
+                    a.applicant_id AS applicant_id, 
+                    a.job_position_id AS job_position_id,
+                    a.status AS status,
+                    a.applied_at AS applied_at,
+                    s.name AS student_name,
+                    j.title AS job_title,
+                    c.name AS company_name
+                FROM application a
+                JOIN student s ON a.applicant_id = s.id
+                JOIN job_position j ON a.job_position_id = j.id
+                JOIN company c ON j.company_id = c.id
+                WHERE c.id = {str(company_id)}
+    '''
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    applications = cursor.fetchall()
+    
+    
+    response = make_response(jsonify(applications))
+    response.status_code = 200
+    return response
+
+#------------------------------------------------------------
 # Create a new application
 @job_applications.route('/applications', methods=['POST'])
 def create_application():
@@ -135,7 +164,7 @@ def update_job_application(application_id):
 
     # Constructing the query
     query = f'''
-        UPDATE job_position
+        UPDATE application
         SET applicant_id = '{applicant_id}', job_position_id = '{job_position_id}', status = '{status}'
         WHERE id = {application_id}
     '''

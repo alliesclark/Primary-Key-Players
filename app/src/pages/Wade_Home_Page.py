@@ -20,14 +20,18 @@ with ui.element("div", className="flex flex-row justify-center items-center", ke
         if ui.button(text="Post Reviews", key="1", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/Post_Review.py')
     with ui.element("div", className="flex flex-col m-2", key="wade_button_2"):
-        if ui.button(text="Post Interview Questions", key="2", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/Post_Interview_Question.py')
+        if ui.button(text="Manage Past Reviews", key="2", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/View_Jobs.py')
     with ui.element("div", className="flex flex-col m-2", key="wade_button_3"):
-        if ui.button(text="View Reviews", key="3", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/See_Reviews.py')
+        if ui.button(text="Post Interview Questions", key="3", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/Post_Interview_Question.py')
     with ui.element("div", className="flex flex-col m-2", key="wade_button_4"):
-        if ui.button(text="View Job Positions", key="4", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
-            st.switch_page('pages/View_Jobs.py')
+        if ui.button(text="View Reviews", key="4", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+            st.switch_page('pages/See_Reviews.py')
     with ui.element("div", className="flex flex-col m-2", key="wade_button_5"):
-        if ui.button(text="Questions From Peers", key="5", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+        if ui.button(text="View Job Positions", key="5", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
             st.switch_page('pages/View_Jobs.py')
+    # with ui.element("div", className="flex flex-col m-2", key="wade_button_6"):
+    #     if ui.button(text="Questions From Peers", key="6", className="bg-green-700 text-white font-bold py-2 px-4 shadow rounded-lg w-full"):
+    #         st.switch_page('pages/View_Jobs.py')
+ 

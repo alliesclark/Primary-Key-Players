@@ -58,7 +58,6 @@ def add_review():
     current_app.logger.info(review_data)
 
     # Extracting the variables
-    id = review_data['id']
     rating = review_data['rating']
     review = review_data['review']
     student_id = review_data['student_id']
@@ -66,8 +65,8 @@ def add_review():
 
     # Constructing the query
     query = f'''
-        INSERT INTO review (id, rating, review, student_id, job_position_id)
-        VALUES ('{id}', '{rating}', {review}, {student_id}, {job_position_id})
+        INSERT INTO review (rating, review, student_id, job_position_id)
+        VALUES ('{rating}', '{review}', '{student_id}', '{job_position_id}')
     '''
     current_app.logger.info(query)
 
@@ -78,7 +77,7 @@ def add_review():
 
     response = make_response("Successfully added review")
     response.status_code = 200
-
+    return response
 
 
 # ------------------------------------------------------------
@@ -218,10 +217,13 @@ def get_reviews_by_company(company_id):
 @reviews.route('/reviews/student/<id>', methods=['GET'])
 def get_reviews_by_student(student_id):
 
-    query = '''
-        SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id
-        FROM review
-        WHERE student_id = {str(student_id)}
+    query = f'''
+        SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id, s.name as student_name
+        FROM review r
+        JOIN job_position jp ON r.job_position_id = jp.id
+        JOIN company c ON jp.company_id = c.id
+        JOIN student s ON r.student_id = s.id
+        WHERE c.id = {str(student_id)}
     '''
     #Log query
     current_app.logger.info(f'GET /reviews/student/<id> query={query}')
