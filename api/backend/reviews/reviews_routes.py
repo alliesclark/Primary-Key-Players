@@ -58,7 +58,6 @@ def add_review():
     current_app.logger.info(review_data)
 
     # Extracting the variables
-    id = review_data['id']
     rating = review_data['rating']
     review = review_data['review']
     student_id = review_data['student_id']
@@ -67,10 +66,9 @@ def add_review():
     # Constructing the query
     query = f'''
         INSERT INTO review (rating, review, student_id, job_position_id)
-        VALUES ('{rating}', {review}, {student_id}, {job_position_id})
+        VALUES ('{rating}', '{review}', '{student_id}', '{job_position_id}')
     '''
-    # current_app.logger.info(query)
-    cursor.execute(query, (rating, review, student_id, job_position_id))
+    current_app.logger.info(query)
 
     # Executing and committing the insert statement
     cursor = db.get_db().cursor()
@@ -79,7 +77,7 @@ def add_review():
 
     response = make_response("Successfully added review")
     response.status_code = 200
-
+    return response
 
 
 # ------------------------------------------------------------
