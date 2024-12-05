@@ -217,10 +217,13 @@ def get_reviews_by_company(company_id):
 @reviews.route('/reviews/student/<id>', methods=['GET'])
 def get_reviews_by_student(student_id):
 
-    query = '''
-        SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id
-        FROM review
-        WHERE student_id = {str(student_id)}
+    query = f'''
+        SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id, s.name as student_name
+        FROM review r
+        JOIN job_position jp ON r.job_position_id = jp.id
+        JOIN company c ON jp.company_id = c.id
+        JOIN student s ON r.student_id = s.id
+        WHERE c.id = {str(student_id)}
     '''
     #Log query
     current_app.logger.info(f'GET /reviews/student/<id> query={query}')
