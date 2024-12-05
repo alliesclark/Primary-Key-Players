@@ -11293,7 +11293,7 @@ VALUES
     (
         '2',
         'Causa? Quae fuerit causa, mox videro; interea hoc tenebo, si ob aliquam.',
-        '4',
+        '5',
         '19'
     );
 
@@ -11529,7 +11529,7 @@ VALUES
     (
         'Civitatis, P. Scaevolam Manilium, ab iisque vitiis, quae paulo ante cum memoriter, tum etiam erga nos amice et benivole collegisti, nec me tamen laudandis maioribus meis corrupisti nec segniorem ad respondendum reddidisti. Quorum facta quem.',
         '81',
-        '4'
+        '5'
     );
 
 INSERT INTO
@@ -11592,7 +11592,7 @@ VALUES
     (
         'Umbram, quod appellant honestum non tam solido quam splendido nomine, virtutem autem nixam hoc honesto nullam requirere voluptatem atque ad beate vivendum sapientia comparaverit, nihil esse maius amicitia.',
         '97',
-        '2'
+        '8'
     );
 
 INSERT INTO
@@ -11781,7 +11781,7 @@ VALUES
     (
         'Quae recordamur. Stulti autem malorum memoria torquentur, sapientes bona praeterita grata recordatione renovata delectant. Est autem situm in nobis ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum defuturum, quas natura non depravata desiderat. Et quem ad modum sit affectus, eum necesse est in Ceramico Chrysippi sedentis porrecta manu.',
         '18',
-        '1'
+        '11'
     );
 
 INSERT INTO
@@ -11799,7 +11799,7 @@ VALUES
     (
         'Via captiosa solvantur ambigua distinguantur ostendit; iudicia rerum dirigentur, numquam ullius oratione victi sententia desistemus.',
         '69',
-        '1'
+        '17'
     );
 
 INSERT INTO
@@ -11961,7 +11961,7 @@ VALUES
     (
         'Finiri, parvos multa habere intervalla requietis, mediocrium nos esse dominos, ut, si tolerabiles.',
         '61',
-        '4'
+        '43'
     );
 
 INSERT INTO
@@ -11979,7 +11979,7 @@ VALUES
     (
         'Fuissent, et in conspectum suum venire vetuit, numquid tibi videtur de voluptatibus suis cogitavisse? Sed.',
         '36',
-        '3'
+        '31'
     );
 
 INSERT INTO
@@ -12065,7 +12065,7 @@ VALUES
     (
         'Mihi libro, quem ad modum sit affectus, eum necesse est in voluptate. Neque enim tempus est ullum, quo non plus habeat.',
         '61',
-        '4'
+        '23'
     );
 
 INSERT INTO
@@ -12083,7 +12083,7 @@ VALUES
     (
         'Una voluptate quaeri, de qua omne certamen est? Tuo vero id quidem, inquam, arbitratu. Sic faciam igitur, inquit: unam rem explicabo, eamque maximam, de.',
         '25',
-        '4'
+        '17'
     );
 
 INSERT INTO
@@ -12430,7 +12430,7 @@ VALUES
 INSERT INTO
     application (applicant_id, job_position_id, status)
 VALUES
-    ('4', '83', 'Rejected');
+    ('8', '83', 'Rejected');
 
 INSERT INTO
     application (applicant_id, job_position_id, status)
@@ -12445,7 +12445,7 @@ VALUES
 INSERT INTO
     application (applicant_id, job_position_id, status)
 VALUES
-    ('4', '5', 'Rejected');
+    ('14', '5', 'Rejected');
 
 INSERT INTO
     application (applicant_id, job_position_id, status)
@@ -12530,7 +12530,7 @@ VALUES
 INSERT INTO
     application (applicant_id, job_position_id, status)
 VALUES
-    ('3', '100', 'Rejected');
+    ('31', '100', 'Rejected');
 
 INSERT INTO
     application (applicant_id, job_position_id, status)
@@ -12650,7 +12650,7 @@ VALUES
 INSERT INTO
     application (applicant_id, job_position_id, status)
 VALUES
-    ('2', '32', 'Accepted');
+    ('12', '32', 'Accepted');
 
 INSERT INTO
     application (applicant_id, job_position_id, status)
@@ -12765,7 +12765,7 @@ VALUES
 INSERT INTO
     application (applicant_id, job_position_id, status)
 VALUES
-    ('4', '81', 'Pending');
+    ('54', '81', 'Pending');
 
 INSERT INTO
     application (applicant_id, job_position_id, status)
