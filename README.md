@@ -45,4 +45,6 @@
 # How to Run Project
     In the route directory, run 'docker compose build app'. Then run 'docker compose up'.
 
+    * The website can take a bit to load, but it is working! Just give it time or try refreshing the page if needed.
+
  
