@@ -71,7 +71,7 @@ def get_applications_by_application_id(application_id):
 
 #------------------------------------------------------------
 # Get all the applications for a specific student
-@job_applications.route('/applications/<student_id>', methods=['GET'])
+@job_applications.route('/applications/student/<student_id>', methods=['GET'])
 def get_job_applications_by_student(student_id):
     
     query = f'''SELECT a.id, 

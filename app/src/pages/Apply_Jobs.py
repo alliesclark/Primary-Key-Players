@@ -28,7 +28,7 @@ def submit_application(job):
     # Hardcoding the student id for now as Maura always has student 1 in the database
     application = {
         "applicant_id": 1, 
-        "job_position_id": job["id"],
+        "job_position_id": job['id'],
     }
     try:
         response = requests.post('http://api:4000/a/applications', json=application)
@@ -57,6 +57,7 @@ def submit_application(job):
             className="text-red-500",
             key=f"application_failure_{job['id']}"
         )
+    logger.debug(f"Submission status: {response.status_code}")
 
 
 def JobCard(job):
@@ -84,7 +85,7 @@ def JobCard(job):
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
     already_applied = False
     try:
-        applications = requests.get(f'http://api:4000/a/applications/{1}').json()
+        applications = requests.get(f'http://api:4000/a/applications/student/{1}').json()
         already_applied = any(application["job_position_id"] == job["id"] for application in applications)
     except requests.exceptions.RequestException as e:
         logger.error(f"Failed to get applications for student {1}: {str(e)}")
