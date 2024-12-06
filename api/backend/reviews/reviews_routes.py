@@ -83,16 +83,15 @@ def add_review():
 # ------------------------------------------------------------
 # Get information about a specific review
 @reviews.route('/reviews/<id>', methods=['GET'])
-def get_review_detail (id):
+def get_specific_job (id):
 
-    query = '''
-        SELECT  id, 
-                rating, 
-                review, 
-                student_id, 
-                job_position_id
-        FROM review
-        WHERE id = {str(id)}
+    query = f'''SELECT id, 
+                       rating, 
+                       review,
+                       student_id, 
+                       job_position_id
+                FROM review 
+                WHERE id = {str(id)}
     '''
     
     # logging the query for debugging purposes.
@@ -115,12 +114,10 @@ def get_review_detail (id):
     response.status_code = 200
     return response
 
-
-
 # ------------------------------------------------------------
 # Update a review in the database
-@reviews.route('/reviews/<id>', methods=['PUT'])
-def update_review():
+@reviews.route('/reviews/<review_id>', methods=['PUT'])
+def update_review(review_id):
     # Collecting data from the request object
     review_data = request.json
     current_app.logger.info(review_data)
@@ -134,9 +131,9 @@ def update_review():
 
     # Constructing the query
     query = f'''
-        UPDATE review
-        SET id = '{id}', rating = '{rating}', review = {review}, student_id = {student_id}, job_position_id = {job_position_id}
-        WHERE id = {id}
+        UPDATE review r
+        SET r.id = '{id}', rating = '{rating}', review = '{review}', student_id = '{student_id}', job_position_id = '{job_position_id}'
+        WHERE id = {review_id}
     '''
     current_app.logger.info(query)
 
@@ -153,13 +150,13 @@ def update_review():
 
 # ------------------------------------------------------------
 # Delete a review from the database
-@reviews.route('/reviews/<id>', methods=['DELETE'])
-def delete_review(id):
+@reviews.route('/reviews/<review_id>', methods=['DELETE'])
+def delete_review(review_id):
 
     # Constructing the query
     query = f'''
         DELETE FROM review
-        WHERE id = {id}
+        WHERE id = {review_id}
     '''
     current_app.logger.info(query)
 
@@ -207,8 +204,8 @@ def get_reviews_by_company(company_id):
 
 # ------------------------------------------------------------
 # Retrieve a list of reviews made by a specific student
-@reviews.route('/reviews/student/<id>', methods=['GET'])
-def get_reviews_by_student(id):
+@reviews.route('/reviews/student/<stud_id>', methods=['GET'])
+def get_reviews_by_student(stud_id):
 
     query = f'''
         SELECT r.id, r.rating, r.review, r.student_id, r.job_position_id, s.name as student_name
@@ -216,10 +213,10 @@ def get_reviews_by_student(id):
         JOIN job_position jp ON r.job_position_id = jp.id
         JOIN company c ON jp.company_id = c.id
         JOIN student s ON r.student_id = s.id
-        WHERE s.id = {str(id)}
+        WHERE r.student_id = {str(stud_id)}
     '''
     #Log query
-    current_app.logger.info(f'GET /reviews/student/<id> query={query}')
+    current_app.logger.info(f'GET /reviews/student/<stud_id> query={query}')
 
     # Get a cursor object from the database
     cursor = db.get_db().cursor()

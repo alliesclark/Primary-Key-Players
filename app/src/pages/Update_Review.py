@@ -110,8 +110,10 @@ def UpdateReviewCard(review):
     #If save button is clicked, student information is updated
     if saveBtn:
         updated_data = {
+            "id": review['id'],
             "rating": updated_rating,
             "review": updated_description,
+            "student_id": review['student_id'],
             "job_position_id": updated_job_position_id,
         }
         try:
