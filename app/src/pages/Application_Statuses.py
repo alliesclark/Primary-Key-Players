@@ -17,6 +17,7 @@ data = {}
 try:
     # maura always has student 1 in the database so we are hardcoding this for now
     data = requests.get('http://api:4000/a/applications/1').json()
+    logger.info(data)
 except:
     logger.error("Error retrieving data from the API")
     data = []  

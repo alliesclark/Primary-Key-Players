@@ -21,7 +21,7 @@ job_position = Blueprint('job-position', __name__)
 @job_position.route('/job-position', methods=['GET'])
 def get_job_position():
     query = '''
-        SELECT  j.id, 
+        SELECT  j.id as id, 
                 j.title as title, 
                 j.description as description, 
                 j.still_accepting as still_accepting, 

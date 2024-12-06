@@ -405,7 +405,7 @@ VALUES
 INSERT INTO
     coop_connect.application (id, applicant_id, job_position_id, status)
 VALUES
-    ('1', '2', '2', 'Pending');
+    ('1', '1', '2', 'Pending');
 
 INSERT INTO
     coop_connect.application (id, applicant_id, job_position_id, status)

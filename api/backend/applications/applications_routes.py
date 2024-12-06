@@ -131,22 +131,30 @@ def get_job_applications_by_company(company_id):
 # Create a new application
 @job_applications.route('/applications', methods=['POST'])
 def create_application():
-    
-    data = request.get_json()
-    applicant_id = data['applicant_id']
-    job_position_id = data['job_position_id']
-    
-    query = f'''INSERT INTO application (applicant_id, job_position_id)
-                VALUES ({applicant_id}, {job_position_id})
+    # Collecting data from the request object
+    application_data = request.json
+    current_app.logger.info(application_data)
+
+    # Extracting the variables
+    applicant_id = application_data['applicant_id']
+    job_position_id = application_data['job_position_id']
+
+    # Constructing the query
+    query = f'''
+        INSERT INTO application (applicant_id, job_position_id)
+        VALUES ('{applicant_id}', '{job_position_id}')
     '''
-    
+    current_app.logger.info(query)
+
+    # Executing and committing the insert statement
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    
-    response = make_response(jsonify({'message': 'Application created'}))
+
+    response = make_response("Successfully created application")
     response.status_code = 201
     return response
+
 
 
 #------------------------------------------------------------
