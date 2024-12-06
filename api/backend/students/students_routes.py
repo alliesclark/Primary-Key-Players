@@ -185,9 +185,16 @@ def get_student_contact (id):
 def get_students_by_job_position(job_id):
 
     query = f'''
-        SELECT s.id, s.name, s.email, s.gpa, s.grad_year, s.major_id
+        SELECT s.id AS id,
+               s.name AS name,
+               s.email as email,
+               s.gpa as gpa,
+               s.grad_year as grad_year,
+               s.major_id,
+               m.name AS major
         FROM student s
         JOIN student_past_job spj ON s.id = spj.student_id
+        JOIN major m ON s.major_id = m.id
         WHERE spj.job_position_id = {str(job_id)}
     '''
 
