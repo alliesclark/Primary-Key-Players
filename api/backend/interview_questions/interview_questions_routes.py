@@ -17,7 +17,7 @@ from backend.db_connection import db
 interview_questions = Blueprint('interview_questions', __name__)
 
 #------------------------------------------------------------
-# Get all the students from the database, package them up,
+# Get all the interview questions from the database, package them up,
 # and return them to the client
 @interview_questions.route('/interview_questions', methods=['GET'])
 def get_students():
@@ -48,7 +48,8 @@ def get_students():
     # send the response back to the client
     return response
 
-# Post a new job position to the database
+#------------------------------------------------------------
+# Post a new interview question to the database
 @interview_questions.route('/interview_questions', methods=['POST'])
 def post_interview_question():
     # Collecting data from the request object
