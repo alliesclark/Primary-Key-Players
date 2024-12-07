@@ -45,6 +45,12 @@
 # How to Run Project
     In the route directory, run 'docker compose build app'. Then run 'docker compose up'.
 
+    Video on Drive:
+    https://drive.google.com/file/d/1YEDWADwRz8UHnukqApc02Lw79bCxE5Qy/view?usp=drive_link
+
+    Same video on DropBox (if Drive is not working):
+    https://www.dropbox.com/scl/fi/f0hzlm3fl9sdeiawcpvvs/database_video_2.mp4?rlkey=5ahi0376h9lszfiyaq1i6pjl1&st=2ttsyhz0&dl=0
+
     * The website can take a bit to load, because we have a lot of mock data, but it is working! Just give it time or try refreshing the page if needed.
 
  
